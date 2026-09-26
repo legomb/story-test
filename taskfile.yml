@@ -1,0 +1,51 @@
+version: "3"
+
+vars:
+  SCHEMA_FILE: schemas/v1/story.schema.json
+  SAMPLE_FILE: examples/star-wars.meta.story.yaml
+  EXAMPLES_DIR: examples
+
+tasks:
+  default:
+    desc: List tasks (default)
+    cmds:
+      - cmd: task -l
+        silent: true
+
+  validate:schemas:
+    desc: Validate JSON schema to check if it's valid JSON
+    cmds:
+      - echo "🔍 Checking {{.SCHEMA_FILE}} is valid JSON"
+      - jq empty {{.SCHEMA_FILE}}
+
+  validate:examples:
+    desc: Validate JSON examples against schema
+    cmds:
+      # - jsonschema -i {{.SAMPLE_FILE}} {{.SCHEMA_FILE}}
+      - echo "🧩 Validating data files against schema"
+      - |
+        for f in {{.EXAMPLES_DIR}}/*.yaml; do
+          echo "  → $f"
+          check-jsonschema --schemafile {{.SCHEMA_FILE}} "$f" || exit 1
+        done
+      - echo "✅ All JSON files are valid"
+
+  pre-commit:install:
+    desc: Install pre-commit hooks
+    cmds:
+      - pre-commit install
+
+  pre-commit:run:
+    desc: Run pre-commit hooks on all files
+    cmds:
+      - pre-commit run --all-files
+
+  format:apply:
+    desc: "Format all files with Prettier"
+    cmds:
+      - prettier --write .
+
+  format:check:
+    desc: "Check formatting without writing"
+    cmds:
+      - prettier --check .
