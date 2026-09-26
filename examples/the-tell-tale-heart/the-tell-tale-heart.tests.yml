@@ -9,3 +9,5 @@ tests:
     assertion: The narrator kills the old man because he wants the old man's gold.
   - name: confession
     assertion: The narrator confesses after believing he can hear the dead man's beating heart.
+  - name: location
+    assertion: The story is set in a spaceship.

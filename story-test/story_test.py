@@ -36,6 +36,8 @@ def _answer_is_true(result: Any, question_id: str) -> bool:
         raise ValueError(f"Laya did not return an answer for {question_id!r}")
 
     answer = answers[question_id]
+    if isinstance(answer, dict) and "choice" in answer:
+        return answer["choice"] == "true"
     if isinstance(answer, dict) and "noul" in answer:
         answer = answer["noul"]
     if isinstance(answer, bool):
@@ -53,28 +55,27 @@ def run_tests(
     tests = load_tests(tests_path)
     story = load_story(story_paths)
     runner = runner or load()
-    questions = {
-        test["name"]: {
-            "type": "noul",
-            "instructions": (
-                "Decide whether this assertion is true according to the story:\n"
-                f"{test['assertion']}"
-            ),
-            "criteria": {
-                "false": "The assertion is false or contradicted by the story.",
-                "true": "The assertion is supported by the story.",
-            },
+    results = []
+    for test in tests:
+        questions = {
+            test["name"]: {
+                "type": "choice",
+                "instructions": "Classify the assertion as true only when supported by the story.",
+                "criteria": {
+                    "true": "The story supports the assertion.",
+                    "false": "The story contradicts or does not support the assertion.",
+                },
+            }
         }
-        for test in tests
-    }
-    result = runner.predict(story, questions)
-    return [
-        {
-            "name": test["name"],
-            "passed": _answer_is_true(result, test["name"]),
-        }
-        for test in tests
-    ]
+        state = f"Assertion: {test['assertion']}\n\nStory:\n{story}"
+        result = runner.predict(state, questions)
+        results.append(
+            {
+                "name": test["name"],
+                "passed": _answer_is_true(result, test["name"]),
+            }
+        )
+    return results
 
 
 def main() -> int:

@@ -3,7 +3,6 @@ from unittest.mock import Mock
 
 from story_test import run_tests
 
-
 ROOT = Path(__file__).resolve().parent.parent
 TESTS = ROOT / "examples/the-tell-tale-heart/the-tell-tale-heart.tests.yml"
 STORY = ROOT / "examples/the-tell-tale-heart/the-tell-tale-heart.md"
@@ -11,15 +10,14 @@ STORY = ROOT / "examples/the-tell-tale-heart/the-tell-tale-heart.md"
 
 def test_tell_tale_heart_example() -> None:
     runner = Mock()
-    runner.predict.return_value = {
-        "answers": {
-            "author": True,
-            "narrator-reliability": True,
-            "victim": True,
-            "motive": False,
-            "confession": True,
-        }
-    }
+    runner.predict.side_effect = [
+        {"answers": {"author": {"choice": "true"}}},
+        {"answers": {"narrator-reliability": {"choice": "true"}}},
+        {"answers": {"victim": {"choice": "true"}}},
+        {"answers": {"motive": {"choice": "false"}}},
+        {"answers": {"confession": {"choice": "true"}}},
+        {"answers": {"location": {"choice": "false"}}},
+    ]
 
     results = run_tests(TESTS, [STORY], runner=runner)
 
@@ -29,8 +27,10 @@ def test_tell_tale_heart_example() -> None:
         {"name": "victim", "passed": True},
         {"name": "motive", "passed": False},
         {"name": "confession", "passed": True},
+        {"name": "location", "passed": False},
     ]
-    runner.predict.assert_called_once()
-    state, questions = runner.predict.call_args.args
+    assert runner.predict.call_count == 6
+    state, questions = runner.predict.call_args_list[0].args
     assert "The Tell-Tale Heart" in state
-    assert questions["author"]["type"] == "noul"
+    assert state.startswith("Assertion: The story was written by Edgar Allan Poe.")
+    assert questions["author"]["type"] == "choice"
