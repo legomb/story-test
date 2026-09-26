@@ -49,3 +49,8 @@ tasks:
     desc: "Check formatting without writing"
     cmds:
       - prettier --check .
+
+  environment:dev:install:
+    desc: "Installs dependencies for dev environment"
+    cmds:
+      - python -m pip install laya

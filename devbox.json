@@ -13,6 +13,7 @@
   "shell": {
     "init_hook": [
       "pre-commit install --install-hooks || true",
+      ". $VENV_DIR/bin/activate",
       "cowsay \"Welcome to the shell environment for story schema!\" | lolcat"
     ]
   }
