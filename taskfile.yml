@@ -75,10 +75,12 @@ tasks:
   tools:laya:run:
     desc: "Runs laya"
     internal: true
+    vars:
+      LAYA_ARGS: ""
     cmds:
-      - laya
+      - laya {{.LAYA_ARGS}} {{.CLI_ARGS}}
 
   tools:laya:run:interactive:
     desc: "Runs laya in interactive mode"
     cmds:
-      - laya
+      - task: tools:laya:run
