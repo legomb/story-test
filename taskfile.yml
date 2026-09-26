@@ -1,8 +1,8 @@
 version: "3"
 
 vars:
-  SCHEMA_FILE: schemas/v1/story.schema.json
-  SAMPLE_FILE: examples/star-wars.meta.story.yaml
+  SCHEMA_FILE: schemas/v1/tests.schema.json
+  SAMPLE_FILE: examples/the-tell-tale-heart/the-tell-tale-heart.tests.yml
   EXAMPLES_DIR: examples
 
 tasks:
@@ -54,3 +54,14 @@ tasks:
     desc: "Installs dependencies for dev environment"
     cmds:
       - python -m pip install laya
+
+  tools:laya:run:
+    desc: "Runs laya"
+    internal: true
+    cmds:
+      - laya
+
+  tools:laya:run:interactive:
+    desc: "Runs laya in interactive mode"
+    cmds:
+      - laya
