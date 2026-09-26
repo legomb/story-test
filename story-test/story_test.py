@@ -88,7 +88,7 @@ def main() -> int:
     failed = 0
     for result in results:
         status = "PASS" if result["passed"] else "FAIL"
-        print(f"{status}: {result['name']}")
+        print(f"Test [{result['name']}]: {status}")
         failed += not result["passed"]
     return int(failed > 0)
 
