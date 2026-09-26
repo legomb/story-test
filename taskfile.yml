@@ -47,7 +47,7 @@ tasks:
       - python -m pytest story-test/test_story_test.py
 
   test:example-story:
-    desc: Run the Tell-Tale Heart assertions with Laya
+    desc: Run the Tell-Tale Heart assertions with Ollama
     cmds:
       - python story-test/story_test.py {{.SAMPLE_FILE}} {{.STORY_FILE}}
 
@@ -80,15 +80,20 @@ tasks:
       - python -m pip install -r story-test/requirements.txt
       - python -m pip install -r story-test/requirements-dev.txt
 
-  tools:laya:run:
-    desc: "Runs laya"
+  environment:ollama:install:
+    desc: "Pull the configured Ollama model"
+    cmds:
+      - ollama pull "${OLLAMA_MODEL:-qwen3:8b}"
+
+  tools:ollama:run:
+    desc: "Runs Ollama"
     internal: true
     vars:
-      LAYA_ARGS: ""
+      OLLAMA_ARGS: ""
     cmds:
-      - laya {{.LAYA_ARGS}} {{.CLI_ARGS}}
+      - ollama {{.OLLAMA_ARGS}} {{.CLI_ARGS}}
 
-  tools:laya:run:interactive:
-    desc: "Runs laya in interactive mode"
+  tools:ollama:run:interactive:
+    desc: "Runs Ollama in interactive mode"
     cmds:
-      - task: tools:laya:run
+      - task: tools:ollama:run
