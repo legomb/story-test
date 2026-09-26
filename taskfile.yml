@@ -37,31 +37,31 @@ tasks:
     desc: Run unit tests and the sample story test
     deps:
       - test:unit
-      - test:story
+      - test:example-story
 
   test:unit:
     desc: Run Python unit tests
     cmds:
       - python -m pytest story-test/test_story_test.py
 
-  test:story:
+  test:example-story:
     desc: Run the Tell-Tale Heart assertions with Laya
     cmds:
       - python story-test/story_test.py {{.SAMPLE_FILE}} {{.STORY_FILE}}
 
-  test:validate:schemas:
+  test:schemas:validate:story-tests-schema:
     desc: Validate JSON schema to check if it's valid JSON
     cmds:
       - echo "🔍 Checking {{.SCHEMA_FILE}} is valid JSON"
       - jq empty {{.SCHEMA_FILE}}
 
-  test:validate:examples:
+  test:schemas:validate:example-schemas:
     desc: Validate JSON examples against schema
     cmds:
       # - jsonschema -i {{.SAMPLE_FILE}} {{.SCHEMA_FILE}}
       - echo "🧩 Validating data files against schema"
       - |
-        for f in {{.EXAMPLES_DIR}}/*.yaml; do
+        for f in {{.EXAMPLES_DIR}}/**/**.yml; do
           echo "  → $f"
           check-jsonschema --schemafile {{.SCHEMA_FILE}} "$f" || exit 1
         done
