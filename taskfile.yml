@@ -13,24 +13,6 @@ tasks:
       - cmd: task -l
         silent: true
 
-  test:validate:schemas:
-    desc: Validate JSON schema to check if it's valid JSON
-    cmds:
-      - echo "🔍 Checking {{.SCHEMA_FILE}} is valid JSON"
-      - jq empty {{.SCHEMA_FILE}}
-
-  test:validate:examples:
-    desc: Validate JSON examples against schema
-    cmds:
-      # - jsonschema -i {{.SAMPLE_FILE}} {{.SCHEMA_FILE}}
-      - echo "🧩 Validating data files against schema"
-      - |
-        for f in {{.EXAMPLES_DIR}}/*.yaml; do
-          echo "  → $f"
-          check-jsonschema --schemafile {{.SCHEMA_FILE}} "$f" || exit 1
-        done
-      - echo "✅ All JSON files are valid"
-
   pre-commit:install:
     desc: Install pre-commit hooks
     cmds:
@@ -66,6 +48,24 @@ tasks:
     desc: Run the Tell-Tale Heart assertions with Laya
     cmds:
       - python story-test/story_test.py {{.SAMPLE_FILE}} {{.STORY_FILE}}
+
+  test:validate:schemas:
+    desc: Validate JSON schema to check if it's valid JSON
+    cmds:
+      - echo "🔍 Checking {{.SCHEMA_FILE}} is valid JSON"
+      - jq empty {{.SCHEMA_FILE}}
+
+  test:validate:examples:
+    desc: Validate JSON examples against schema
+    cmds:
+      # - jsonschema -i {{.SAMPLE_FILE}} {{.SCHEMA_FILE}}
+      - echo "🧩 Validating data files against schema"
+      - |
+        for f in {{.EXAMPLES_DIR}}/*.yaml; do
+          echo "  → $f"
+          check-jsonschema --schemafile {{.SCHEMA_FILE}} "$f" || exit 1
+        done
+      - echo "✅ All JSON files are valid"
 
   environment:dev:install:
     desc: "Installs dependencies for dev environment"
