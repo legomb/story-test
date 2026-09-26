@@ -10,7 +10,6 @@ import yaml
 from jsonschema import validate
 from laya import load
 
-
 SCHEMA_PATH = Path(__file__).resolve().parent.parent / "schemas/v1/tests.schema.json"
 
 
@@ -79,9 +78,15 @@ def run_tests(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Run Laya assertions against Markdown stories.")
-    parser.add_argument("tests", type=Path, help="YAML file matching the story tests schema")
-    parser.add_argument("stories", type=Path, nargs="+", help="One or more Markdown story files")
+    parser = argparse.ArgumentParser(
+        description="Run Laya assertions against Markdown stories."
+    )
+    parser.add_argument(
+        "tests", type=Path, help="YAML file matching the story tests schema"
+    )
+    parser.add_argument(
+        "stories", type=Path, nargs="+", help="One or more Markdown story files"
+    )
     args = parser.parse_args()
 
     results = run_tests(args.tests, args.stories)
