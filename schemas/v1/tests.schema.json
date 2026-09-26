@@ -1,0 +1,33 @@
+{
+  "$id": "https://example.com/story-tests.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Story tests schema",
+  "description": "Schema for a list of assertions about a story.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["tests"],
+  "properties": {
+    "tests": {
+      "type": "array",
+      "description": "A list of story assertions to evaluate.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "assertion"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "A unique name for the test.",
+            "minLength": 1
+          },
+          "assertion": {
+            "type": "string",
+            "description": "A claim about the story that can be evaluated as passing or failing.",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

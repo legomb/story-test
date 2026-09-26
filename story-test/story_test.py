@@ -1,0 +1,112 @@
+"""Evaluate story assertions with Laya."""
+
+from __future__ import annotations
+
+import argparse
+from pathlib import Path
+from typing import Any, Iterable
+
+import yaml
+from jsonschema import validate
+from laya import load
+
+SCHEMA_PATH = Path(__file__).resolve().parent.parent / "schemas/v1/tests.schema.json"
+
+
+def load_tests(path: Path) -> list[dict[str, str]]:
+    with path.open(encoding="utf-8") as file:
+        document = yaml.safe_load(file)
+
+    with SCHEMA_PATH.open(encoding="utf-8") as file:
+        schema = yaml.safe_load(file)
+    validate(document, schema)
+    return document["tests"]
+
+
+def load_story(paths: Iterable[Path]) -> str:
+    sections = []
+    for path in paths:
+        sections.append(path.read_text(encoding="utf-8"))
+    return "\n\n".join(sections)
+
+
+def _answer_is_true(result: Any, question_id: str) -> bool:
+    answers = result.get("answers") if isinstance(result, dict) else None
+    if not isinstance(answers, dict) or question_id not in answers:
+        raise ValueError(f"Laya did not return an answer for {question_id!r}")
+
+    answer = answers[question_id]
+    if isinstance(answer, dict) and "choice" in answer:
+        return answer["choice"] == "true"
+    if isinstance(answer, dict) and "noul" in answer:
+        answer = answer["noul"]
+    if isinstance(answer, bool):
+        return answer
+    if isinstance(answer, (int, float)):
+        return answer >= 0.5
+    raise ValueError(f"Unexpected Laya answer for {question_id!r}: {answer!r}")
+
+
+def run_tests(
+    tests_path: Path,
+    story_paths: Iterable[Path],
+    runner: Any | None = None,
+) -> list[dict[str, Any]]:
+    tests = load_tests(tests_path)
+    story = load_story(story_paths)
+    runner = runner or load()
+    results = []
+    for test in tests:
+        questions = {
+            test["name"]: {
+                "type": "choice",
+                "instructions": "Classify the assertion as true only when supported by the story.",
+                "criteria": {
+                    "true": "The story supports the assertion.",
+                    "false": "The story contradicts or does not support the assertion.",
+                },
+            }
+        }
+        state = f"Assertion: {test['assertion']}\n\nStory:\n{story}"
+        result = runner.predict(state, questions)
+        results.append(
+            {
+                "name": test["name"],
+                "passed": _answer_is_true(result, test["name"]),
+            }
+        )
+    return results
+
+
+def exit_code(results: list[dict[str, Any]], fail_on_test_failure: bool) -> int:
+    if fail_on_test_failure and any(not result["passed"] for result in results):
+        return 1
+    return 0
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="Run Laya assertions against Markdown stories."
+    )
+    parser.add_argument(
+        "tests", type=Path, help="YAML file matching the story tests schema"
+    )
+    parser.add_argument(
+        "stories", type=Path, nargs="+", help="One or more Markdown story files"
+    )
+    parser.add_argument(
+        "--fail-on-test-failure",
+        action="store_true",
+        help="Exit with status 1 when any story test fails",
+    )
+    args = parser.parse_args()
+
+    results = run_tests(args.tests, args.stories)
+    for result in results:
+        status = "PASS" if result["passed"] else "FAIL"
+        print(f"Test [{result['name']}]: {status}")
+    return exit_code(results, args.fail_on_test_failure)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

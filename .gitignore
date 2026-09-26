@@ -1,0 +1,5 @@
+.DS_Store
+.devbox
+.venv
+__pycache__
+.pytest_cache

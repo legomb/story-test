@@ -1,0 +1,20 @@
+{
+  "packages": [
+    "python@3.12",
+    "go-task@latest",
+    "pre-commit@latest",
+    "jq@latest",
+    "check-jsonschema@latest",
+    "prettier@latest",
+    "cowsay@latest",
+    "figlet@latest",
+    "lolcat@latest"
+  ],
+  "shell": {
+    "init_hook": [
+      "pre-commit install --install-hooks || true",
+      ". $VENV_DIR/bin/activate",
+      "cowsay \"Welcome to the shell environment for story schema!\" | lolcat"
+    ]
+  }
+}

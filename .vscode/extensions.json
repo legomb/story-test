@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "jetpack-io.devbox",
+    "esbenp.prettier-vscode",
+    "ms-python.black-formatter"
+  ]
+}

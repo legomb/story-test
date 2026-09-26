@@ -1,0 +1,22 @@
+name: Valid Example files
+
+on:
+  push:
+    paths:
+      - "examples/**"
+      - ".github/workflows/**"
+  pull_request:
+    paths:
+      - "examples/**"
+      - ".github/workflows/**"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install devbox
+        uses: jetify-com/devbox-install-action@v0.12.0
+
+      - name: Validate schemas
+        run: devbox run task test:schemas:validate:example-schemas
