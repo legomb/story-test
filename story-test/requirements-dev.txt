@@ -1,4 +1,1 @@
-laya
-PyYAML
-jsonschema
 pytest

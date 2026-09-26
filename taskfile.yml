@@ -70,6 +70,7 @@ tasks:
   environment:dev:install:
     desc: "Installs dependencies for dev environment"
     cmds:
+      - python -m pip install -r story-test/requirements.txt
       - python -m pip install -r story-test/requirements-dev.txt
 
   tools:laya:run:
