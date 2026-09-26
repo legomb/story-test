@@ -36,6 +36,8 @@ tasks:
   test:all:
     desc: Run unit tests and the sample story test
     deps:
+      - test:schemas:validate:story-tests-schema
+      - test:schemas:validate:example-schemas
       - test:unit
       - test:example-story
 
