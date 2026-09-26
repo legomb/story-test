@@ -78,6 +78,12 @@ def run_tests(
     return results
 
 
+def exit_code(results: list[dict[str, Any]], fail_on_test_failure: bool) -> int:
+    if fail_on_test_failure and any(not result["passed"] for result in results):
+        return 1
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="Run Laya assertions against Markdown stories."
@@ -88,15 +94,18 @@ def main() -> int:
     parser.add_argument(
         "stories", type=Path, nargs="+", help="One or more Markdown story files"
     )
+    parser.add_argument(
+        "--fail-on-test-failure",
+        action="store_true",
+        help="Exit with status 1 when any story test fails",
+    )
     args = parser.parse_args()
 
     results = run_tests(args.tests, args.stories)
-    failed = 0
     for result in results:
         status = "PASS" if result["passed"] else "FAIL"
         print(f"Test [{result['name']}]: {status}")
-        failed += not result["passed"]
-    return int(failed > 0)
+    return exit_code(results, args.fail_on_test_failure)
 
 
 if __name__ == "__main__":

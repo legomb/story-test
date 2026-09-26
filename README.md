@@ -25,7 +25,41 @@ task pre-commit:install
 
 ### Tasks
 
-Run `tasks` to see a list of available tasks.
+Run `task` to see a list of available tasks.
+
+Install the development dependencies with:
+
+```bash
+task environment:dev:install
+```
+
+Run the sample story tests. Failed story assertions are reported but do not
+fail the task by default:
+
+```bash
+task test:example-story
+```
+
+To make failed story assertions fail the task, use the strict variant:
+
+```bash
+task test:example-story:strict
+```
+
+Run the complete local validation suite:
+
+```bash
+task test:all
+```
+
+This runs schema validation, Python unit tests, and the sample story tests.
+
+Run formatting and pre-commit checks with:
+
+```bash
+task format:check
+task pre-commit:run
+```
 
 ## Features
 

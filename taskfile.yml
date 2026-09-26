@@ -51,6 +51,11 @@ tasks:
     cmds:
       - python story-test/story_test.py {{.SAMPLE_FILE}} {{.STORY_FILE}}
 
+  test:example-story:strict:
+    desc: Run the Tell-Tale Heart assertions and fail on failed tests
+    cmds:
+      - python story-test/story_test.py {{.SAMPLE_FILE}} {{.STORY_FILE}} --fail-on-test-failure
+
   test:schemas:validate:story-tests-schema:
     desc: Validate JSON schema to check if it's valid JSON
     cmds:

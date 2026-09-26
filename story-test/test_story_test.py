@@ -1,7 +1,7 @@
 from pathlib import Path
 from unittest.mock import Mock
 
-from story_test import run_tests
+from story_test import exit_code, run_tests
 
 ROOT = Path(__file__).resolve().parent.parent
 TESTS = ROOT / "examples/the-tell-tale-heart/the-tell-tale-heart.tests.yml"
@@ -34,3 +34,10 @@ def test_tell_tale_heart_example() -> None:
     assert "The Tell-Tale Heart" in state
     assert state.startswith("Assertion: The story was written by Edgar Allan Poe.")
     assert questions["author"]["type"] == "choice"
+
+
+def test_failures_do_not_affect_exit_code_by_default() -> None:
+    results = [{"name": "location", "passed": False}]
+
+    assert exit_code(results, fail_on_test_failure=False) == 0
+    assert exit_code(results, fail_on_test_failure=True) == 1
