@@ -13,13 +13,13 @@ tasks:
       - cmd: task -l
         silent: true
 
-  validate:schemas:
+  test:validate:schemas:
     desc: Validate JSON schema to check if it's valid JSON
     cmds:
       - echo "🔍 Checking {{.SCHEMA_FILE}} is valid JSON"
       - jq empty {{.SCHEMA_FILE}}
 
-  validate:examples:
+  test:validate:examples:
     desc: Validate JSON examples against schema
     cmds:
       # - jsonschema -i {{.SAMPLE_FILE}} {{.SCHEMA_FILE}}
@@ -51,7 +51,7 @@ tasks:
     cmds:
       - prettier --check .
 
-  test:
+  test:all:
     desc: Run unit tests and the sample story test
     deps:
       - test:unit

@@ -7,13 +7,13 @@ repos:
     hooks:
       - id: validate-jsonschema
         name: Validate schema file
-        entry: bash -c 'task validate:schemas'
+        entry: bash -c 'task test:validate:schemas'
         language: system
   # - repo: local
   #   hooks:
   #     - id: validate-examples
   #       name: Validate JSON schema and examples
-  #       entry: bash -c 'task validate:examples'
+  #       entry: bash -c 'task test:validate:examples'
   #       language: system
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
