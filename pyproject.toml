@@ -18,8 +18,8 @@ dependencies = [
 story-test = "story_test:main"
 
 [tool.setuptools]
-package-dir = {"" = "story-test"}
+package-dir = {"" = "src"}
 py-modules = ["story_test"]
 
 [tool.pytest.ini_options]
-pythonpath = ["story-test"]
+pythonpath = ["src"]

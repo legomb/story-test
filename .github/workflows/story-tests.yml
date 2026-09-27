@@ -5,14 +5,18 @@ on:
     paths:
       - "examples/**"
       - "schemas/**"
-      - "story-test/**"
+      - "src/**"
+      - "test/**"
+      - "requirements*.txt"
       - "taskfile.yml"
       - ".github/workflows/story-tests.yml"
   pull_request:
     paths:
       - "examples/**"
       - "schemas/**"
-      - "story-test/**"
+      - "src/**"
+      - "test/**"
+      - "requirements*.txt"
       - "taskfile.yml"
       - ".github/workflows/story-tests.yml"
 
