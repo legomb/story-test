@@ -41,6 +41,14 @@ tasks:
       - test:unit
       - test:example-story
 
+  test:ci:
+    desc: Run CI checks without requiring Ollama
+    deps:
+      - test:schemas:validate:story-tests-schema
+      - test:schemas:validate:example-schemas
+      - test:unit
+      - format:check
+
   test:unit:
     desc: Run Python unit tests
     cmds:

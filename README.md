@@ -1,6 +1,6 @@
 # Story test
 
-[![Build](https://github.com/legomb/story-test/actions/workflows/validation-schemas.yml/badge.svg)](https://github.com/legomb/story-test/actions/workflows/validation-schemas.yml) - [![Build](https://github.com/legomb/story-test/actions/workflows/validation-examples.yml/badge.svg)](https://github.com/legomb/story-test/actions/workflows/validation-examples.yml)
+[![CI](https://github.com/legomb/story-test/actions/workflows/ci.yml/badge.svg)](https://github.com/legomb/story-test/actions/workflows/ci.yml)
 
 CLI tool that runs tests against a story.
 
