@@ -9,7 +9,7 @@ Lets you define a list of checks you expect from your story (e.g. "The hero wins
 It does not replace a human editor, but it's a great tool to aid in the editing phase, for both writers and editors:
 
 - Make sure your story's main points are addressed while editing your story.
-- Build and grow a repository with standard tests you want to run on manuscripts, and make specific tests for specific genres, stories, etc.
+- Build and grow a repository with standard tests you want to run on manuscripts, and make specific tests for specific genres, etc.
 
 Uses a local [Ollama](https://ollama.com/) model.
 
