@@ -11,7 +11,7 @@ It does not replace a human editor, but it's a great tool to aid in the editing 
 - Make sure your story's main points are addressed while editing your story.
 - Build and grow a repository with standard tests you want to run on manuscripts, and make specific tests for specific genres, etc.
 
-Uses a local [Ollama](https://ollama.com/) model.
+Supports OpenAI, Anthropic, and local [Ollama](https://ollama.com/) models.
 
 ## Usage
 
@@ -36,6 +36,28 @@ Failed assertions are reported without failing the process by default. For CI, u
 
 ```bash
 story-test story.tests.yml story.md --fail-on-test-failure
+```
+
+The default provider is OpenAI. Set the provider and API key before running:
+
+```bash
+export OPENAI_API_KEY=your-key
+story-test story.tests.yml story.md --provider openai --model gpt-4.1-mini
+```
+
+For Anthropic:
+
+```bash
+export ANTHROPIC_API_KEY=your-key
+story-test story.tests.yml story.md \
+	--provider anthropic --model claude-3-5-haiku-latest
+```
+
+Ollama remains available as an optional local provider:
+
+```bash
+STORY_TEST_PROVIDER=ollama sh install.sh
+story-test story.tests.yml story.md --provider ollama --model qwen3:8b
 ```
 
 ## 🚀 Getting Started
@@ -71,21 +93,21 @@ For a local user installation, run the bootstrap script from this repository:
 sh install.sh
 ```
 
-This creates an isolated Python environment, installs the `story-test` command,
-and pulls the default Ollama model. The installed command can then be used from
-any directory:
+This creates an isolated Python environment and installs the `story-test`
+command. The installed command can then be used from any directory:
 
 ```bash
 story-test path/to/story.tests.yml path/to/story.md
 ```
 
-Set `STORY_TEST_MODEL` before running the installer to use another model:
+For an Ollama installation, set `STORY_TEST_PROVIDER` before running the
+installer to pull a local model:
 
 ```bash
-STORY_TEST_MODEL=qwen3:30b-a3b sh install.sh
+STORY_TEST_PROVIDER=ollama STORY_TEST_MODEL=qwen3:30b-a3b sh install.sh
 ```
 
-Install Ollama separately, then download the default model through Task:
+Install Ollama separately only when using the local provider, then download the model through Task:
 
 ```bash
 task environment:ollama:install
@@ -104,8 +126,9 @@ fail the task by default:
 task test:example-story
 ```
 
-The local model is `qwen3:8b` by default. Set `STORY_TEST_MODEL` to use another
-model already installed in Ollama.
+The OpenAI and Anthropic providers use their standard `OPENAI_API_KEY` and
+`ANTHROPIC_API_KEY` environment variables. The Ollama provider uses
+`STORY_TEST_MODEL` and `STORY_TEST_CONTEXT_LENGTH`.
 
 The model can be changed with `STORY_TEST_MODEL`, and the context window can be
 changed with `STORY_TEST_CONTEXT_LENGTH`.
@@ -124,9 +147,9 @@ task test:all
 
 This runs schema validation, Python unit tests, and the sample story tests.
 
-The GitHub Actions workflow installs Ollama and pulls `qwen3:8b` automatically.
-Qwen open-weight models are Apache 2.0 licensed and Ollama is MIT licensed;
-always review the license for the exact model tag you deploy.
+The GitHub Actions workflow validates and builds the package without running an
+AI provider. Qwen open-weight models are Apache 2.0 licensed and Ollama is MIT
+licensed; always review the license for the exact model tag you deploy.
 
 Run formatting and pre-commit checks with:
 
