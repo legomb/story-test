@@ -101,6 +101,15 @@ task format:check
 task pre-commit:run
 ```
 
+Before publishing a release, build and validate both distribution formats:
+
+```bash
+task package:check
+```
+
+This creates the wheel and source archive under `dist/` and validates them with
+Twine. Increment the version in `pyproject.toml` before building a new release.
+
 ## Features
 
 - [x] JSON structure validation using `jq`

@@ -14,7 +14,7 @@ import yaml
 from jsonschema import validate
 
 SOURCE_SCHEMA_PATH = (
-    Path(__file__).resolve().parent.parent / "schemas/v1/tests.schema.json"
+    Path(__file__).resolve().parents[2] / "schemas/v1/tests.schema.json"
 )
 INSTALLED_SCHEMA_PATH = (
     Path(sys.prefix) / "share/story-test/schemas/v1/tests.schema.json"

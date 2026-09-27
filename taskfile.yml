@@ -90,6 +90,19 @@ tasks:
     cmds:
       - sh install.sh
 
+  package:build:
+    desc: "Build wheel and source distribution archives"
+    cmds:
+      - rm -rf build dist *.egg-info src/*.egg-info src/story_test.egg-info
+      - python -m build
+
+  package:check:
+    desc: "Build and validate distribution archives"
+    deps:
+      - package:build
+    cmds:
+      - python -m twine check dist/*
+
   environment:ollama:install:
     desc: "Pull the configured Ollama model"
     cmds:
