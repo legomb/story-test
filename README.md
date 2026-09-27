@@ -2,7 +2,9 @@
 
 [![Build](https://github.com/legomb/story-test/actions/workflows/validation-schemas.yml/badge.svg)](https://github.com/legomb/story-test/actions/workflows/validation-schemas.yml) - [![Build](https://github.com/legomb/story-test/actions/workflows/validation-examples.yml/badge.svg)](https://github.com/legomb/story-test/actions/workflows/validation-examples.yml)
 
-Runs tests against a story using a local [Ollama](https://ollama.com/) model.
+CLI tool that runs tests against a story.
+
+Uses a local [Ollama](https://ollama.com/) model.
 
 ## 🚀 Getting Started
 
