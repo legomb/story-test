@@ -38,7 +38,8 @@ Failed assertions are reported without failing the process by default. For CI, u
 story-test story.tests.yml story.md --fail-on-test-failure
 ```
 
-The default provider is OpenAI. Set the provider and API key before running:
+The default provider is Ollama. For hosted OpenAI usage, set the API key and
+select the provider explicitly:
 
 ```bash
 export OPENAI_API_KEY=your-key
@@ -134,7 +135,7 @@ task test:example-story
 
 The OpenAI and Anthropic providers use their standard `OPENAI_API_KEY` and
 `ANTHROPIC_API_KEY` environment variables. The Ollama provider uses
-`STORY_TEST_MODEL` and `STORY_TEST_CONTEXT_LENGTH`.
+`STORY_TEST_MODEL` and `STORY_TEST_CONTEXT_LENGTH` and is the default.
 
 The model can be changed with `STORY_TEST_MODEL`, and the context window can be
 changed with `STORY_TEST_CONTEXT_LENGTH`.

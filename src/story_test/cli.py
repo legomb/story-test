@@ -20,7 +20,7 @@ SOURCE_SCHEMA_PATH = (
 INSTALLED_SCHEMA_PATH = (
     Path(sys.prefix) / "share/story-test/schemas/v1/tests.schema.json"
 )
-DEFAULT_PROVIDER = "openai"
+DEFAULT_PROVIDER = "ollama"
 DEFAULT_MODELS = {
     "openai": "gpt-4.1-mini",
     "anthropic": "claude-3-5-haiku-latest",
@@ -248,7 +248,7 @@ def main() -> int:
         "--provider",
         choices=DEFAULT_MODELS,
         default=os.getenv("STORY_TEST_PROVIDER", DEFAULT_PROVIDER),
-        help="AI provider to use (default: openai)",
+        help="AI provider to use (default: ollama)",
     )
     parser.add_argument("--model", help="Model name for the selected provider")
     parser.add_argument(

@@ -7,7 +7,7 @@ install_dir="${STORY_TEST_INSTALL_DIR:-$HOME/.local/share/story-test}"
 venv_dir="$install_dir/venv"
 bin_dir="${STORY_TEST_BIN_DIR:-$HOME/.local/bin}"
 model="${STORY_TEST_MODEL:-qwen3:8b}"
-provider="${STORY_TEST_PROVIDER:-openai}"
+provider="${STORY_TEST_PROVIDER:-ollama}"
 
 if ! command -v python3 >/dev/null 2>&1; then
   echo "python3 is required" >&2

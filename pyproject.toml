@@ -20,12 +20,10 @@ classifiers = [
 dependencies = [
   "anthropic>=0.40",
   "jsonschema>=4.0",
+  "ollama>=0.6",
   "openai>=1.50",
   "PyYAML>=6.0",
 ]
-
-[project.optional-dependencies]
-ollama = ["ollama>=0.6"]
 
 [project.scripts]
 story-test = "story_test:main"
