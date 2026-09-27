@@ -34,6 +34,23 @@ SYSTEM_PROMPT = (
 )
 
 
+def _anthropic_json(content: list[Any]) -> dict[str, Any]:
+    text = next(
+        (
+            block.text
+            for block in content
+            if getattr(block, "type", None) == "text" and getattr(block, "text", None)
+        ),
+        None,
+    )
+    if text is None:
+        raise ValueError("Anthropic returned no text content block")
+    text = text.strip()
+    if text.startswith("```"):
+        text = text.split("\n", 1)[1].rsplit("```", 1)[0].strip()
+    return json.loads(text)
+
+
 class OpenAIRunner:
     def __init__(self, model: str) -> None:
         self.model = model
@@ -86,7 +103,7 @@ class AnthropicRunner:
                 messages=[{"role": "user", "content": state}],
             )
             answers[question_id] = {
-                "supported": json.loads(response.content[0].text)["supported"]
+                "supported": _anthropic_json(response.content)["supported"]
             }
         return {"answers": answers}
 

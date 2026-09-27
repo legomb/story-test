@@ -2,6 +2,7 @@ from pathlib import Path
 from unittest.mock import Mock
 
 from story_test import OllamaRunner, exit_code, run_tests
+from story_test.cli import _anthropic_json
 
 ROOT = Path(__file__).resolve().parent.parent
 TESTS = ROOT / "test/the-tell-tale-heart.tests.yml"
@@ -61,3 +62,14 @@ def test_ollama_runner_reads_structured_boolean() -> None:
     result = runner.predict("Story text", {"author": {"type": "boolean"}})
 
     assert result == {"answers": {"author": {"supported": True}}}
+
+
+def test_anthropic_json_skips_thinking_blocks() -> None:
+    class ThinkingBlock:
+        type = "thinking"
+
+    class TextBlock:
+        type = "text"
+        text = '```json\n{"supported": true}\n```'
+
+    assert _anthropic_json([ThinkingBlock(), TextBlock()]) == {"supported": True}
