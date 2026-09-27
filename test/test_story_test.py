@@ -2,7 +2,7 @@ from pathlib import Path
 from unittest.mock import Mock
 
 from story_test import OllamaRunner, exit_code, run_tests
-from story_test.cli import _anthropic_json
+from story_test.cli import _anthropic_json, _colorize_status
 
 ROOT = Path(__file__).resolve().parent.parent
 TESTS = ROOT / "test/the-tell-tale-heart.tests.yml"
@@ -75,3 +75,9 @@ def test_anthropic_json_skips_thinking_blocks() -> None:
         text = '```json\n{"supported": true}\n```'
 
     assert _anthropic_json([ThinkingBlock(), TextBlock()]) == {"supported": True}
+
+
+def test_colorizes_test_statuses() -> None:
+    assert _colorize_status("PASS", True) == "\033[32mPASS\033[0m"
+    assert _colorize_status("FAIL", True) == "\033[31mFAIL\033[0m"
+    assert _colorize_status("PASS", False) == "PASS"

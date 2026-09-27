@@ -248,6 +248,13 @@ def exit_code(results: list[dict[str, Any]], fail_on_test_failure: bool) -> int:
     return 0
 
 
+def _colorize_status(status: str, enabled: bool) -> str:
+    if not enabled:
+        return status
+    color = "32" if status == "PASS" else "31"
+    return f"\033[{color}m{status}\033[0m"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="Run AI assertions against Markdown stories."
@@ -280,10 +287,15 @@ def main() -> int:
         default=int(os.getenv("STORY_TEST_CONTEXT_LENGTH", DEFAULT_CONTEXT_LENGTH)),
     )
     args = parser.parse_args()
+    color_enabled = bool(os.getenv("FORCE_COLOR")) and not os.getenv("NO_COLOR")
+    color_enabled = (sys.stdout.isatty() or color_enabled) and not os.getenv("NO_COLOR")
 
     def print_result(result: dict[str, Any]) -> None:
         status = "PASS" if result["passed"] else "FAIL"
-        print(f"Test [{result['name']}]: {status}", flush=True)
+        print(
+            f"Test [{result['name']}]: {_colorize_status(status, color_enabled)}",
+            flush=True,
+        )
 
     results = run_tests(
         args.tests,
