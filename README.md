@@ -1,8 +1,42 @@
 # Story test
 
-[![Build](https://github.com/legomb/story-test/actions/workflows/validation-schemas.yml/badge.svg)](https://github.com/legomb/story-test/actions/workflows/validation-schemas.yml) - [![Build](https://github.com/legomb/story-test/actions/workflows/validation-examples.yml/badge.svg)](https://github.com/legomb/story-test/actions/workflows/validation-examples.yml)
+[![Build](https://github.com/legomb/story-test/actions/workflows/build.yml/badge.svg)](https://github.com/legomb/story-test/actions/workflows/build.yml)
 
-Runs tests against a story using a local [Ollama](https://ollama.com/) model.
+CLI tool that runs tests against a story.
+
+Lets you define a list of checks you expect from your story (e.g. "The hero wins in the end"), and determines whether each one passes or fails.
+
+It does not replace a human editor, but it's a great tool to aid in the editing phase, for both writers and editors:
+
+- Make sure your story's main points are addressed while editing your story.
+- Build and grow a repository with standard tests you want to run on manuscripts, and make specific tests for specific genres, etc.
+
+Uses a local [Ollama](https://ollama.com/) model.
+
+## Usage
+
+Create a test file containing assertions about a story:
+
+```yaml
+tests:
+	- name: author
+		assertion: The story was written by Edgar Allan Poe.
+	- name: ending
+		assertion: The narrator confesses at the end of the story.
+```
+
+Run the tests against one or more Markdown files:
+
+```bash
+story-test story.tests.yml story.md
+story-test story.tests.yml chapter-1.md chapter-2.md
+```
+
+Failed assertions are reported without failing the process by default. For CI, use strict mode:
+
+```bash
+story-test story.tests.yml story.md --fail-on-test-failure
+```
 
 ## 🚀 Getting Started
 
@@ -29,6 +63,26 @@ Install the development dependencies with:
 
 ```bash
 task environment:dev:install
+```
+
+For a local user installation, run the bootstrap script from this repository:
+
+```bash
+sh install.sh
+```
+
+This creates an isolated Python environment, installs the `story-test` command,
+and pulls the default Ollama model. The installed command can then be used from
+any directory:
+
+```bash
+story-test path/to/story.tests.yml path/to/story.md
+```
+
+Set `STORY_TEST_MODEL` before running the installer to use another model:
+
+```bash
+STORY_TEST_MODEL=qwen3:30b-a3b sh install.sh
 ```
 
 Install Ollama separately, then download the default model through Task:
@@ -80,6 +134,15 @@ Run formatting and pre-commit checks with:
 task format:check
 task pre-commit:run
 ```
+
+Before publishing a release, build and validate both distribution formats:
+
+```bash
+task package:check
+```
+
+This creates the wheel and source archive under `dist/` and validates them with
+Twine. Increment the version in `pyproject.toml` before building a new release.
 
 ## Features
 

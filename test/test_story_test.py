@@ -4,8 +4,8 @@ from unittest.mock import Mock
 from story_test import OllamaRunner, exit_code, run_tests
 
 ROOT = Path(__file__).resolve().parent.parent
-TESTS = ROOT / "examples/the-tell-tale-heart/the-tell-tale-heart.tests.yml"
-STORY = ROOT / "examples/the-tell-tale-heart/the-tell-tale-heart.md"
+TESTS = ROOT / "test/the-tell-tale-heart.tests.yml"
+STORY = ROOT / "test/the-tell-tale-heart.md"
 
 
 def test_tell_tale_heart_example() -> None:

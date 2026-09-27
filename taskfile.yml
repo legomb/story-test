@@ -2,9 +2,9 @@ version: "3"
 
 vars:
   SCHEMA_FILE: schemas/v1/tests.schema.json
-  SAMPLE_FILE: examples/the-tell-tale-heart/the-tell-tale-heart.tests.yml
-  STORY_FILE: examples/the-tell-tale-heart/the-tell-tale-heart.md
-  EXAMPLES_DIR: examples
+  SAMPLE_FILE: test/the-tell-tale-heart.tests.yml
+  STORY_FILE: test/the-tell-tale-heart.md
+  EXAMPLES_DIR: test
 
 tasks:
   default:
@@ -16,7 +16,7 @@ tasks:
   pre-commit:install:
     desc: Install pre-commit hooks
     cmds:
-      - pre-commit install
+      - pre-commit install -f
 
   pre-commit:run:
     desc: Run pre-commit hooks on all files
@@ -41,20 +41,28 @@ tasks:
       - test:unit
       - test:example-story
 
+  test:ci:
+    desc: Run CI checks without requiring Ollama
+    deps:
+      - test:schemas:validate:story-tests-schema
+      - test:schemas:validate:example-schemas
+      - test:unit
+      - format:check
+
   test:unit:
     desc: Run Python unit tests
     cmds:
-      - python -m pytest story-test/test_story_test.py
+      - python -m pytest test/test_story_test.py
 
   test:example-story:
     desc: Run the Tell-Tale Heart assertions with Ollama
     cmds:
-      - python story-test/story_test.py {{.SAMPLE_FILE}} {{.STORY_FILE}}
+      - story-test {{.SAMPLE_FILE}} {{.STORY_FILE}}
 
   test:example-story:strict:
     desc: Run the Tell-Tale Heart assertions and fail on failed tests
     cmds:
-      - python story-test/story_test.py {{.SAMPLE_FILE}} {{.STORY_FILE}} --fail-on-test-failure
+      - story-test {{.SAMPLE_FILE}} {{.STORY_FILE}} --fail-on-test-failure
 
   test:schemas:validate:story-tests-schema:
     desc: Validate JSON schema to check if it's valid JSON
@@ -68,7 +76,7 @@ tasks:
       # - jsonschema -i {{.SAMPLE_FILE}} {{.SCHEMA_FILE}}
       - echo "🧩 Validating data files against schema"
       - |
-        for f in {{.EXAMPLES_DIR}}/**/**.yml; do
+        for f in {{.EXAMPLES_DIR}}/**.yml; do
           echo "  → $f"
           check-jsonschema --schemafile {{.SCHEMA_FILE}} "$f" || exit 1
         done
@@ -77,8 +85,31 @@ tasks:
   environment:dev:install:
     desc: "Installs dependencies for dev environment"
     cmds:
-      - python -m pip install -r story-test/requirements.txt
-      - python -m pip install -r story-test/requirements-dev.txt
+      - python -m pip install -e .
+      - python -m pip install -r requirements-dev.txt
+
+  package:install:
+    desc: "Install the story-test CLI into the active Python environment"
+    cmds:
+      - python -m pip install .
+
+  package:install:local:
+    desc: "Install the CLI and configured Ollama model for local use"
+    cmds:
+      - sh install.sh
+
+  package:build:
+    desc: "Build wheel and source distribution archives"
+    cmds:
+      - rm -rf build dist *.egg-info src/*.egg-info src/story_test.egg-info
+      - python -m build
+
+  package:check:
+    desc: "Build and validate distribution archives"
+    deps:
+      - package:build
+    cmds:
+      - python -m twine check dist/*
 
   environment:ollama:install:
     desc: "Pull the configured Ollama model"

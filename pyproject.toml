@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "story-test"
+version = "1.2.0"
+description = "Evaluate story assertions with a local Ollama model."
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [{name = "legomb"}]
+license = "MIT"
+license-files = ["LICENSE"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.12",
+  "Operating System :: OS Independent",
+]
+dependencies = [
+  "jsonschema>=4.0",
+  "ollama>=0.6",
+  "PyYAML>=6.0",
+]
+
+[project.scripts]
+story-test = "story_test:main"
+
+[project.urls]
+Homepage = "https://github.com/legomb/story-test"
+Issues = "https://github.com/legomb/story-test/issues"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = ["story_test"]
+
+[tool.setuptools.data-files]
+"share/story-test/schemas/v1" = ["schemas/v1/tests.schema.json"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]

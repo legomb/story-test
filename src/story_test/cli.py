@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import sys
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -12,7 +13,12 @@ from ollama import Client, ResponseError
 import yaml
 from jsonschema import validate
 
-SCHEMA_PATH = Path(__file__).resolve().parent.parent / "schemas/v1/tests.schema.json"
+SOURCE_SCHEMA_PATH = (
+    Path(__file__).resolve().parents[2] / "schemas/v1/tests.schema.json"
+)
+INSTALLED_SCHEMA_PATH = (
+    Path(sys.prefix) / "share/story-test/schemas/v1/tests.schema.json"
+)
 DEFAULT_MODEL = "qwen3:8b"
 DEFAULT_OLLAMA_HOST = "http://127.0.0.1:11434"
 DEFAULT_CONTEXT_LENGTH = 32768
@@ -66,7 +72,10 @@ def load_tests(path: Path) -> list[dict[str, str]]:
     with path.open(encoding="utf-8") as file:
         document = yaml.safe_load(file)
 
-    with SCHEMA_PATH.open(encoding="utf-8") as file:
+    schema_path = (
+        SOURCE_SCHEMA_PATH if SOURCE_SCHEMA_PATH.exists() else INSTALLED_SCHEMA_PATH
+    )
+    with schema_path.open(encoding="utf-8") as file:
         schema = yaml.safe_load(file)
     validate(document, schema)
     return document["tests"]
