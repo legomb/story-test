@@ -7,7 +7,7 @@ import json
 import os
 import sys
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any, Callable, Iterable
 
 from anthropic import Anthropic
 from openai import OpenAI
@@ -217,6 +217,7 @@ def run_tests(
     model: str | None = None,
     ollama_host: str = DEFAULT_OLLAMA_HOST,
     context_length: int = DEFAULT_CONTEXT_LENGTH,
+    on_result: Callable[[dict[str, Any]], None] | None = None,
 ) -> list[dict[str, Any]]:
     tests = load_tests(tests_path)
     story = load_story(story_paths)
@@ -231,12 +232,13 @@ def run_tests(
         }
         state = f"Assertion: {test['assertion']}\n\nStory:\n{story}"
         result = runner.predict(state, questions)
-        results.append(
-            {
-                "name": test["name"],
-                "passed": _answer_is_true(result, test["name"]),
-            }
-        )
+        test_result = {
+            "name": test["name"],
+            "passed": _answer_is_true(result, test["name"]),
+        }
+        results.append(test_result)
+        if on_result is not None:
+            on_result(test_result)
     return results
 
 
@@ -279,6 +281,10 @@ def main() -> int:
     )
     args = parser.parse_args()
 
+    def print_result(result: dict[str, Any]) -> None:
+        status = "PASS" if result["passed"] else "FAIL"
+        print(f"Test [{result['name']}]: {status}", flush=True)
+
     results = run_tests(
         args.tests,
         args.stories,
@@ -286,10 +292,8 @@ def main() -> int:
         model=args.model or os.getenv("STORY_TEST_MODEL"),
         ollama_host=args.ollama_host,
         context_length=args.context_length,
+        on_result=print_result,
     )
-    for result in results:
-        status = "PASS" if result["passed"] else "FAIL"
-        print(f"Test [{result['name']}]: {status}")
     return exit_code(results, args.fail_on_test_failure)
 
 
