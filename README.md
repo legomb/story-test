@@ -7,9 +7,9 @@
 
 </div>
 
-CLI tool that runs tests against a story.
+CLI tool that runs natural language tests (e.g. "The hero wins in the end") against a markdown text.
 
-Lets you define a list of checks you expect from your story (e.g. "The hero wins in the end"), and determines whether each one passes or fails.
+Lets you define a list of checks you expect from your story and determines whether each one passes or fails.
 
 It does not replace a human editor, but it's a great tool to aid in the editing phase, for both writers and editors:
 
