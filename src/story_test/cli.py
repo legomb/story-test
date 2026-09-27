@@ -37,6 +37,10 @@ SYSTEM_PROMPT = (
 class OpenAIRunner:
     def __init__(self, model: str) -> None:
         self.model = model
+        if not os.getenv("OPENAI_API_KEY"):
+            raise RuntimeError(
+                "OPENAI_API_KEY is not set. Export it before using the openai provider."
+            )
         self.client = OpenAI()
 
     def predict(
@@ -64,6 +68,10 @@ class OpenAIRunner:
 class AnthropicRunner:
     def __init__(self, model: str) -> None:
         self.model = model
+        if not (os.getenv("ANTHROPIC_API_KEY") or os.getenv("ANTHROPIC_AUTH_TOKEN")):
+            raise RuntimeError(
+                "Set ANTHROPIC_API_KEY or ANTHROPIC_AUTH_TOKEN before using the anthropic provider."
+            )
         self.client = Anthropic()
 
     def predict(
@@ -74,7 +82,6 @@ class AnthropicRunner:
             response = self.client.messages.create(
                 model=self.model,
                 max_tokens=64,
-                temperature=0,
                 system=SYSTEM_PROMPT,
                 messages=[{"role": "user", "content": state}],
             )

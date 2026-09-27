@@ -50,7 +50,13 @@ For Anthropic:
 ```bash
 export ANTHROPIC_API_KEY=your-key
 story-test story.tests.yml story.md \
-	--provider anthropic --model claude-3-5-haiku-latest
+	--provider anthropic --model claude-opus-5-5
+```
+
+If you are using a Claude Code authorization token, Anthropic's SDK also accepts:
+
+```bash
+export ANTHROPIC_AUTH_TOKEN=your-token
 ```
 
 Ollama remains available as an optional local provider:

@@ -1,6 +1,7 @@
 {
   "editor.formatOnSave": true,
   "editor.lineNumbers": "on",
+  "python.terminal.useEnvFile": true,
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
