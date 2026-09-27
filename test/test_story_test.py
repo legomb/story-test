@@ -56,8 +56,7 @@ def test_ollama_runner_reads_structured_boolean() -> None:
             assert kwargs["options"]["num_ctx"] == 32768
             return Response()
 
-    runner = OllamaRunner("qwen3:8b", "http://localhost:11434", 32768)
-    runner.client = Client()
+    runner = OllamaRunner("qwen3:8b", "http://localhost:11434", 32768, client=Client())
 
     result = runner.predict("Story text", {"author": {"type": "boolean"}})
 

@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "story-test"
-version = "1.2.0"
-description = "Evaluate story assertions with a local Ollama model."
+version = "2.0.0"
+description = "Evaluate story assertions with hosted or local AI models."
 readme = "README.md"
 requires-python = ">=3.12"
 authors = [{name = "legomb"}]
@@ -18,8 +18,10 @@ classifiers = [
   "Operating System :: OS Independent",
 ]
 dependencies = [
+  "anthropic>=0.40",
   "jsonschema>=4.0",
   "ollama>=0.6",
+  "openai>=1.50",
   "PyYAML>=6.0",
 ]
 

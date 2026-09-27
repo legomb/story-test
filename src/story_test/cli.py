@@ -9,7 +9,8 @@ import sys
 from pathlib import Path
 from typing import Any, Iterable
 
-from ollama import Client, ResponseError
+from anthropic import Anthropic
+from openai import OpenAI
 import yaml
 from jsonschema import validate
 
@@ -19,16 +20,91 @@ SOURCE_SCHEMA_PATH = (
 INSTALLED_SCHEMA_PATH = (
     Path(sys.prefix) / "share/story-test/schemas/v1/tests.schema.json"
 )
-DEFAULT_MODEL = "qwen3:8b"
+DEFAULT_PROVIDER = "ollama"
+DEFAULT_MODELS = {
+    "openai": "gpt-4.1-mini",
+    "anthropic": "claude-3-5-haiku-latest",
+    "ollama": "qwen3:8b",
+}
 DEFAULT_OLLAMA_HOST = "http://127.0.0.1:11434"
 DEFAULT_CONTEXT_LENGTH = 32768
+SYSTEM_PROMPT = (
+    "Evaluate the assertion against the story. Return only JSON in the form "
+    '{"supported": true} or {"supported": false}.'
+)
+
+
+class OpenAIRunner:
+    def __init__(self, model: str) -> None:
+        self.model = model
+        if not os.getenv("OPENAI_API_KEY"):
+            raise RuntimeError(
+                "OPENAI_API_KEY is not set. Export it before using the openai provider."
+            )
+        self.client = OpenAI()
+
+    def predict(
+        self, state: str, questions: dict[str, dict[str, Any]]
+    ) -> dict[str, Any]:
+        answers = {}
+        for question_id in questions:
+            response = self.client.chat.completions.create(
+                model=self.model,
+                temperature=0,
+                response_format={"type": "json_object"},
+                messages=[
+                    {"role": "system", "content": SYSTEM_PROMPT},
+                    {"role": "user", "content": state},
+                ],
+            )
+            answers[question_id] = {
+                "supported": json.loads(response.choices[0].message.content)[
+                    "supported"
+                ]
+            }
+        return {"answers": answers}
+
+
+class AnthropicRunner:
+    def __init__(self, model: str) -> None:
+        self.model = model
+        if not (os.getenv("ANTHROPIC_API_KEY") or os.getenv("ANTHROPIC_AUTH_TOKEN")):
+            raise RuntimeError(
+                "Set ANTHROPIC_API_KEY or ANTHROPIC_AUTH_TOKEN before using the anthropic provider."
+            )
+        self.client = Anthropic()
+
+    def predict(
+        self, state: str, questions: dict[str, dict[str, Any]]
+    ) -> dict[str, Any]:
+        answers = {}
+        for question_id in questions:
+            response = self.client.messages.create(
+                model=self.model,
+                max_tokens=64,
+                system=SYSTEM_PROMPT,
+                messages=[{"role": "user", "content": state}],
+            )
+            answers[question_id] = {
+                "supported": json.loads(response.content[0].text)["supported"]
+            }
+        return {"answers": answers}
 
 
 class OllamaRunner:
-    def __init__(self, model: str, host: str, context_length: int) -> None:
+    def __init__(
+        self, model: str, host: str, context_length: int, client: Any | None = None
+    ) -> None:
         self.model = model
         self.context_length = context_length
-        self.client = Client(host=host)
+        if client is None:
+            import ollama
+
+            self.client = ollama.Client(host=host)
+            self.response_error = ollama.ResponseError
+        else:
+            self.client = client
+            self.response_error = Exception
 
     def predict(
         self, state: str, questions: dict[str, dict[str, Any]]
@@ -41,10 +117,7 @@ class OllamaRunner:
                     messages=[
                         {
                             "role": "system",
-                            "content": (
-                                "Evaluate the assertion against the story. "
-                                "Return true only when the story supports it."
-                            ),
+                            "content": SYSTEM_PROMPT,
                         },
                         {"role": "user", "content": state},
                     ],
@@ -55,7 +128,7 @@ class OllamaRunner:
                     },
                     options={"num_ctx": self.context_length, "temperature": 0},
                 )
-            except ResponseError as error:
+            except self.response_error as error:
                 if error.status_code == 404:
                     raise RuntimeError(
                         f"Ollama model {self.model!r} is not installed. "
@@ -91,7 +164,7 @@ def load_story(paths: Iterable[Path]) -> str:
 def _answer_is_true(result: Any, question_id: str) -> bool:
     answers = result.get("answers") if isinstance(result, dict) else None
     if not isinstance(answers, dict) or question_id not in answers:
-        raise ValueError(f"Ollama did not return an answer for {question_id!r}")
+        raise ValueError(f"AI provider did not return an answer for {question_id!r}")
 
     answer = answers[question_id]
     if isinstance(answer, dict) and "supported" in answer:
@@ -104,20 +177,34 @@ def _answer_is_true(result: Any, question_id: str) -> bool:
         return answer
     if isinstance(answer, (int, float)):
         return answer >= 0.5
-    raise ValueError(f"Unexpected Ollama answer for {question_id!r}: {answer!r}")
+    raise ValueError(f"Unexpected AI answer for {question_id!r}: {answer!r}")
+
+
+def create_runner(
+    provider: str, model: str, ollama_host: str, context_length: int
+) -> Any:
+    if provider == "openai":
+        return OpenAIRunner(model)
+    if provider == "anthropic":
+        return AnthropicRunner(model)
+    if provider == "ollama":
+        return OllamaRunner(model, ollama_host, context_length)
+    raise ValueError(f"Unsupported provider: {provider}")
 
 
 def run_tests(
     tests_path: Path,
     story_paths: Iterable[Path],
     runner: Any | None = None,
-    model: str = DEFAULT_MODEL,
+    provider: str = DEFAULT_PROVIDER,
+    model: str | None = None,
     ollama_host: str = DEFAULT_OLLAMA_HOST,
     context_length: int = DEFAULT_CONTEXT_LENGTH,
 ) -> list[dict[str, Any]]:
     tests = load_tests(tests_path)
     story = load_story(story_paths)
-    runner = runner or OllamaRunner(model, ollama_host, context_length)
+    model = model or DEFAULT_MODELS[provider]
+    runner = runner or create_runner(provider, model, ollama_host, context_length)
     results = []
     for test in tests:
         questions = {
@@ -144,7 +231,7 @@ def exit_code(results: list[dict[str, Any]], fail_on_test_failure: bool) -> int:
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Run Ollama assertions against Markdown stories."
+        description="Run AI assertions against Markdown stories."
     )
     parser.add_argument(
         "tests", type=Path, help="YAML file matching the story tests schema"
@@ -157,7 +244,13 @@ def main() -> int:
         action="store_true",
         help="Exit with status 1 when any story test fails",
     )
-    parser.add_argument("--model", default=os.getenv("STORY_TEST_MODEL", DEFAULT_MODEL))
+    parser.add_argument(
+        "--provider",
+        choices=DEFAULT_MODELS,
+        default=os.getenv("STORY_TEST_PROVIDER", DEFAULT_PROVIDER),
+        help="AI provider to use (default: ollama)",
+    )
+    parser.add_argument("--model", help="Model name for the selected provider")
     parser.add_argument(
         "--ollama-host",
         default=os.getenv("OLLAMA_HOST", DEFAULT_OLLAMA_HOST),
@@ -172,7 +265,8 @@ def main() -> int:
     results = run_tests(
         args.tests,
         args.stories,
-        model=args.model,
+        provider=args.provider,
+        model=args.model or os.getenv("STORY_TEST_MODEL"),
         ollama_host=args.ollama_host,
         context_length=args.context_length,
     )

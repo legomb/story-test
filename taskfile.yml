@@ -1,5 +1,7 @@
 version: "3"
 
+dotenv: [.env]
+
 vars:
   SCHEMA_FILE: schemas/v1/tests.schema.json
   SAMPLE_FILE: test/the-tell-tale-heart.tests.yml
@@ -58,6 +60,18 @@ tasks:
     desc: Run the Tell-Tale Heart assertions with Ollama
     cmds:
       - story-test {{.SAMPLE_FILE}} {{.STORY_FILE}}
+
+  test:example-story:claude:
+    desc: Run the Tell-Tale Heart assertions with Claude
+    requires:
+      vars: [ANTHROPIC_API_KEY]
+    cmds:
+      - |
+        story-test \
+        {{.SAMPLE_FILE}} \
+        {{.STORY_FILE}} \
+        --provider anthropic \
+        --model claude-opus-5-5
 
   test:example-story:strict:
     desc: Run the Tell-Tale Heart assertions and fail on failed tests
