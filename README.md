@@ -1,6 +1,11 @@
 # Story test
 
+<div align="center">
+
 [![Build](https://github.com/legomb/story-test/actions/workflows/build.yml/badge.svg)](https://github.com/legomb/story-test/actions/workflows/build.yml)
+[![PyPI version](https://img.shields.io/pypi/v/story-test.svg)](https://pypi.org/project/story-test/)
+
+</div>
 
 CLI tool that runs tests against a story.
 
