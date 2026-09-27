@@ -6,11 +6,10 @@ CLI tool that runs tests against a story.
 
 Lets you define a list of checks you expect from your story (e.g. "The hero wins in the end"), and determines whether each one passes or fails.
 
-It does not replace a human editor or an editing phase, but it's a great tool to aid in that phase.
+It does not replace a human editor, but it's a great tool to aid in the editing phase, for both writers and editors:
 
-**For writers:** Make sure your story's main points are addressed before submitting your story for editing.
-
-**For editors:** Create a repository with standard tests you want to run on manuscripts, and make specific tests for specific genres/stories.
+- Make sure your story's main points are addressed while editing your story.
+- Build and grow a repository with standard tests you want to run on manuscripts, and make specific tests for specific genres, stories, etc.
 
 Uses a local [Ollama](https://ollama.com/) model.
 
