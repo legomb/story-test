@@ -11,6 +11,7 @@ STORY = ROOT / "test/the-tell-tale-heart.md"
 
 def test_tell_tale_heart_example() -> None:
     runner = Mock()
+    completed = []
     runner.predict.side_effect = [
         {"answers": {"author": {"choice": "true"}}},
         {"answers": {"narrator-reliability": {"choice": "true"}}},
@@ -20,7 +21,7 @@ def test_tell_tale_heart_example() -> None:
         {"answers": {"location": {"choice": "false"}}},
     ]
 
-    results = run_tests(TESTS, [STORY], runner=runner)
+    results = run_tests(TESTS, [STORY], runner=runner, on_result=completed.append)
 
     assert results == [
         {"name": "author", "passed": True},
@@ -31,6 +32,7 @@ def test_tell_tale_heart_example() -> None:
         {"name": "location", "passed": False},
     ]
     assert runner.predict.call_count == 6
+    assert completed == results
     state, questions = runner.predict.call_args_list[0].args
     assert "The Tell-Tale Heart" in state
     assert state.startswith("Assertion: The story was written by Edgar Allan Poe.")
