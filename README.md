@@ -1,6 +1,6 @@
 # Story test
 
-[![Build](https://github.com/legomb/story-test/actions/workflows/build.yml/badge.svg)](https://github.com/legomb/story-test/actions/workflows/build.yml)
+[![Build](https://github.com/legomb/story-test/actions/workflows/build.yml/badge.svg)](https://github.com/legomb/story-test/actions/workflows/build.yml) [![PyPI](https://img.shields.io/pypi/v/story-test.svg)](https://pypi.org/project/story-test/)
 
 CLI tool that runs tests against a story.
 
