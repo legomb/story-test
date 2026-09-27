@@ -13,6 +13,32 @@ It does not replace a human editor, but it's a great tool to aid in the editing 
 
 Uses a local [Ollama](https://ollama.com/) model.
 
+## Usage
+
+Create a test file containing assertions about a story:
+
+```yaml
+tests:
+	- name: author
+		assertion: The story was written by Edgar Allan Poe.
+	- name: ending
+		assertion: The narrator confesses at the end of the story.
+```
+
+Run the tests against one or more Markdown files:
+
+```bash
+story-test story.tests.yml story.md
+story-test story.tests.yml chapter-1.md chapter-2.md
+```
+
+Failed assertions are reported without failing the process by default. For CI,
+use strict mode:
+
+```bash
+story-test story.tests.yml story.md --fail-on-test-failure
+```
+
 ## 🚀 Getting Started
 
 This repo uses **direnv**, **Devbox**, **Taskfile**, and **pre-commit** for a reproducible dev environment and automatic schema/YAML validation.
