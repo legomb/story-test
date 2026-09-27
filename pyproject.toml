@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "story-test"
+version = "2.0.0"
+description = "Evaluate story assertions with a local Ollama model."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "jsonschema>=4.0",
+  "ollama>=0.6",
+  "PyYAML>=6.0",
+]
+
+[project.scripts]
+story-test = "story_test:main"
+
+[tool.setuptools]
+package-dir = {"" = "story-test"}
+py-modules = ["story_test"]
+
+[tool.pytest.ini_options]
+pythonpath = ["story-test"]

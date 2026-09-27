@@ -16,7 +16,7 @@ tasks:
   pre-commit:install:
     desc: Install pre-commit hooks
     cmds:
-      - pre-commit install
+      - pre-commit install -f
 
   pre-commit:run:
     desc: Run pre-commit hooks on all files
@@ -77,8 +77,18 @@ tasks:
   environment:dev:install:
     desc: "Installs dependencies for dev environment"
     cmds:
-      - python -m pip install -r story-test/requirements.txt
+      - python -m pip install -e .
       - python -m pip install -r story-test/requirements-dev.txt
+
+  package:install:
+    desc: "Install the story-test CLI into the active Python environment"
+    cmds:
+      - python -m pip install .
+
+  package:install:local:
+    desc: "Install the CLI and configured Ollama model for local use"
+    cmds:
+      - sh install.sh
 
   environment:ollama:install:
     desc: "Pull the configured Ollama model"

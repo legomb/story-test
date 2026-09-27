@@ -31,6 +31,26 @@ Install the development dependencies with:
 task environment:dev:install
 ```
 
+For a local user installation, run the bootstrap script from this repository:
+
+```bash
+sh install.sh
+```
+
+This creates an isolated Python environment, installs the `story-test` command,
+and pulls the default Ollama model. The installed command can then be used from
+any directory:
+
+```bash
+story-test path/to/story.tests.yml path/to/story.md
+```
+
+Set `STORY_TEST_MODEL` before running the installer to use another model:
+
+```bash
+STORY_TEST_MODEL=qwen3:30b-a3b sh install.sh
+```
+
 Install Ollama separately, then download the default model through Task:
 
 ```bash
