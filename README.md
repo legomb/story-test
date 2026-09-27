@@ -25,9 +25,9 @@ Create a test file containing assertions about a story:
 ```yaml
 tests:
 	- name: author
-		assertion: The story was written by Edgar Allan Poe.
+	  assertion: The story was written by Edgar Allan Poe.
 	- name: ending
-		assertion: The narrator confesses at the end of the story.
+	  assertion: The narrator confesses at the end of the story.
 ```
 
 Run the tests against one or more Markdown files:
