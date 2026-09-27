@@ -2,9 +2,9 @@ version: "3"
 
 vars:
   SCHEMA_FILE: schemas/v1/tests.schema.json
-  SAMPLE_FILE: examples/the-tell-tale-heart/the-tell-tale-heart.tests.yml
-  STORY_FILE: examples/the-tell-tale-heart/the-tell-tale-heart.md
-  EXAMPLES_DIR: examples
+  SAMPLE_FILE: test/the-tell-tale-heart.tests.yml
+  STORY_FILE: test/the-tell-tale-heart.md
+  EXAMPLES_DIR: test
 
 tasks:
   default:
@@ -68,7 +68,7 @@ tasks:
       # - jsonschema -i {{.SAMPLE_FILE}} {{.SCHEMA_FILE}}
       - echo "🧩 Validating data files against schema"
       - |
-        for f in {{.EXAMPLES_DIR}}/**/**.yml; do
+        for f in {{.EXAMPLES_DIR}}/**.yml; do
           echo "  → $f"
           check-jsonschema --schemafile {{.SCHEMA_FILE}} "$f" || exit 1
         done
