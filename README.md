@@ -32,8 +32,7 @@ story-test story.tests.yml story.md
 story-test story.tests.yml chapter-1.md chapter-2.md
 ```
 
-Failed assertions are reported without failing the process by default. For CI,
-use strict mode:
+Failed assertions are reported without failing the process by default. For CI, use strict mode:
 
 ```bash
 story-test story.tests.yml story.md --fail-on-test-failure
