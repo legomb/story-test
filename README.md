@@ -1,5 +1,7 @@
 # Story test
 
+**Test-driven writing for everyone.**
+
 <div align="center">
 
 [![Build](https://github.com/legomb/story-test/actions/workflows/build.yml/badge.svg)](https://github.com/legomb/story-test/actions/workflows/build.yml)
@@ -17,6 +19,12 @@ It does not replace a human editor, but it's a great tool to aid in the editing 
 - Build and grow a repository with standard tests you want to run on manuscripts, and make specific tests for specific genres, etc.
 
 Supports OpenAI, Anthropic, and local [Ollama](https://ollama.com/) models.
+
+> [!warning] WARNING (first and foremost)
+> This app does not replace writers or editors.
+> This app does not write or edit for you.
+> It just checks the things you ask it to check.
+> Fuck AI, and fuck hacks that use AI to make reading and writing less fun.
 
 ## Usage
 
