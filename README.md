@@ -13,7 +13,7 @@ CLI tool that uses AI/LLMs to evaluate plain-English tests (e.g. "The hero wins 
 
 Supports OpenAI, Anthropic, and local [Ollama](https://ollama.com/) models.
 
-> [!warning] WARNING (first and foremost)
+> [!WARNING]
 > This app does not replace writers or editors.
 > This app does not write or edit for you.
 > It just checks the things you ask it to check.
