@@ -126,7 +126,9 @@ ollama pull qwen3:8b
 For OpenAI or Anthropic, no local model runtime is needed; provide
 `OPENAI_API_KEY` or `ANTHROPIC_API_KEY` and select the provider as shown above.
 
-## Test-driven writing
+## Advanced uses
+
+### Test-driven writing
 
 You could even use this for test-driven writing, which I'm hereby inventing I believe.
 Pantsers: skip this section.
@@ -160,13 +162,13 @@ has not met that intention yet, or the assertion needs to be clarified. And a
 passing assertion is not a grade for literary quality: these checks are prompts
 for your judgment, not a substitute for it.
 
-### How to apply it to writing
+How to apply it to writing:
 
 1. Start with your notes, outline, or requirements. Write a handful of checks for things you want the story to establish, include, or resolve.
 2. Create a draft and run the checks. Early failures are expected; use them to spot intentions that are not yet showing up in the text.
 3. After a writing session or major revision, run the same checks again. Add, remove, or refine checks as your plans change.
 
-### CI, automatic checks every time you make changes
+### CI for writing
 
 If your manuscript lives in Git, you can run the checks on every push or pull
 request. That gives you a repeatable reminder when a revision changes something
