@@ -23,7 +23,6 @@ Supports OpenAI, Anthropic, and local [Ollama](https://ollama.com/) models.
 
 Sure, for one-time checks you can always upload your doc to an AI agent and ask questions. But for recurring tests that you want to automate, this tool lets you create batches of tests that:
 
-- Writing: Make sure your story's main points are addressed while editing your story.
 - Editing: Build and grow a repository with standard tests you want to run on manuscripts, and make specific tests for specific genres, etc.
 - Whitepapers / notes: Run tests against your notes or papers. Does my paper convey X point clearly even after my latest changes?
 - Contracts: Run tests against your contracts. Is X case covered?
@@ -132,24 +131,47 @@ For OpenAI or Anthropic, no local model runtime is needed; provide
 You could even use this for test-driven writing, which I'm hereby inventing I believe.
 Pantsers: skip this section.
 
-Some of you are plotters.
+Some of you are plotters. Some of you are technical writers who start with
+requirements before you have a document. Just for you, this app lets you apply
+the basic TDD cycle to writing: define what you want the text to do, draft, run
+the checks, and revise based on what they reveal.
 
-Some of you are technical writers that have requirements before you have a document.
+Start by turning your outline, character notes, or revision checklist into
+plain-English assertions. For example:
 
-Just for you, this app basically enables you to use [Test-Driven Development (TDD)](https://en.wikipedia.org/wiki/Test-driven_development) for writing.
+```yaml
+tests:
+	- name: protagonist-goal
+		assertion: The protagonist's goal is clear by the end of the first chapter.
+	- name: planted-clue
+		assertion: The brass key is introduced before it is used to open the cellar.
+	- name: ending-resolves-conflict
+		assertion: The ending resolves the central conflict between the sisters.
+```
 
-### So what is test-driven writing?
+Then run the tests against your draft:
 
-summary of TDD #todo
+```bash
+story-test story.tests.yml story.md
+```
+
+An assertion failing does not mean the story is bad. It means either the draft
+has not met that intention yet, or the assertion needs to be clarified. And a
+passing assertion is not a grade for literary quality: these checks are prompts
+for your judgment, not a substitute for it.
 
 ### How to apply it to writing
 
-1. Start with the tests. Write your notes, story outline, etc. and create a blank story file. Run your tests. They will all fail. This is your starting point. Now your goal is to make those tests succeed.
-2. After each writing session, run the tests again to track your progress.
+1. Start with your notes, outline, or requirements. Write a handful of checks for things you want the story to establish, include, or resolve.
+2. Create a draft and run the checks. Early failures are expected; use them to spot intentions that are not yet showing up in the text.
+3. After a writing session or major revision, run the same checks again. Add, remove, or refine checks as your plans change.
 
 ### CI, automatic checks every time you make changes
 
-If you want to nerd it out, etc.
+If your manuscript lives in Git, you can run the checks on every push or pull
+request. That gives you a repeatable reminder when a revision changes something
+you were trying to preserve. Keep subjective checks advisory, and reserve strict
+CI failure for assertions you genuinely want to enforce.
 
 ## Development Setup
 
