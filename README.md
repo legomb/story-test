@@ -15,8 +15,11 @@ Supports OpenAI, Anthropic, and local [Ollama](https://ollama.com/) models.
 
 > [!WARNING]
 > This app does not replace writers or editors.
+>
 > This app does not write or edit for you.
+>
 > It just checks the things you ask it to check.
+>
 > Fuck AI, and fuck hacks that use AI to make reading and writing less fun.
 
 ## Use cases
