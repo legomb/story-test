@@ -45,7 +45,7 @@ As a writer, I keep:
 - Character sheets/descriptions
 - Plot summaries
 - Notes for myself before I send manuscripts to an editor, that I have to re-check with every new draft
-- Notes and snippets from books on writing with advice I’d love to think that I'm sticking to, but it’s impossible to keep track of every single nugget of advice.
+- Notes and snippets from books on writing, with advice I’d love to think I'm sticking to, but can’t keep track of.
 
 But I'm also a software engineer 💅, and testing is part of my job.
 
