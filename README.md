@@ -1,6 +1,6 @@
 # Story test
 
-**Test your stories with plain-English tests.**
+**Run plain-English tests against your stories or texts.**
 
 <div align="center">
 
