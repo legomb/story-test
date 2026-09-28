@@ -2,8 +2,24 @@ name: Validate
 
 on:
   pull_request:
+    paths:
+      - ".github/**"
+      - "pyproject.toml"
+      - "requirements*.txt"
+      - "schemas/**"
+      - "src/**"
+      - "taskfile.yml"
+      - "test/**"
   push:
     branches: [main]
+    paths:
+      - ".github/**"
+      - "pyproject.toml"
+      - "requirements*.txt"
+      - "schemas/**"
+      - "src/**"
+      - "taskfile.yml"
+      - "test/**"
   workflow_dispatch:
 
 concurrency:
