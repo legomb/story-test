@@ -16,38 +16,31 @@ It reports whether each test passes or fails.
 Supports OpenAI, Anthropic, and local [Ollama](https://ollama.com/) models.
 
 > [!WARNING]
-> This app does not replace writers or editors.
->
-> This app does not write or edit for you.
->
-> It just checks the things you ask it to check.
->
-> This is not for hacks that use AI to make reading and writing less fun. Go home and get yourself an honest hobby.
+> This app is not a replacement for human writers or editors. It does not write or edit for you. It just checks the things you ask it to check.
 
 ## Use cases
 
-For a one-time check, you can always upload your doc to an AI agent and ask it questions. But if you want to build a list of tests and run them anytime you want against any text, this tool enables you to:
+This tool can help with:
 
-- Writing: Make sure your story's main points are addressed while editing your story.
-- Editing: Build and grow a repository with standard tests you want to run on manuscripts, and make specific tests for specific genres, etc.
+- Writing: Make sure your story's main points are addressed.
+- Editing: Build and grow a repository with standard tests you want to run on manuscripts, and make specific tests for specific genres, styles, etc.
 - White papers / notes: Run tests against your notes or papers. Does my paper convey X point clearly after my latest changes?
 - Contracts: Run tests against your contracts. Is X case covered?
 
 ## The problem (a.k.a. how this started)
 
-Always good to start with the problem we want to solve.
+It's always good to start with the problem we want to solve.
 
 As a writer, I keep:
 
 - Notes
 - To-do lists
-- Checklists
 - Character sheets/descriptions
 - Plot summaries
-- Notes for myself before I send manuscripts to an editor, that I have to re-check with every new draft
-- Notes and snippets from books on writing, with advice I’d love to think I'm sticking to, but can’t keep track of.
+- Checklists that I have to re-check with every new draft, e.g. before sending the story to an editor
+- Notes and snippets from books on writing, with advice I’d love to think I'm sticking to, but can’t keep track of
 
-But I'm also a software engineer 💅, and testing is part of my job.
+But I'm also a software engineer, and testing is part of my job.
 
 And I noticed that all of these can be expressed as natural language tests (in plain English, or Spanish, or any language).
 
