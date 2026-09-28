@@ -175,12 +175,12 @@ request. That gives you a repeatable reminder when a revision changes something
 you were trying to preserve. Keep subjective checks advisory, and reserve strict
 CI failure for assertions you genuinely want to enforce.
 
-## Development Setup
+## Maintaining this repo
+
+### Development Setup
 
 The repository uses **direnv**, **Devbox**, **Taskfile**, and **pre-commit** for
 a reproducible development environment and automatic schema/YAML validation.
-
-### Setup
 
 ```bash
 # Automatically enter devbox via direnv (if available)
