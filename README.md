@@ -24,7 +24,7 @@ Supports OpenAI, Anthropic, and local [Ollama](https://ollama.com/) models.
 
 ## Use cases
 
-Sure, for one-time checks you can always upload your doc to an AI agent and ask questions. But for recurring tests that you want to automate, this tool lets you create batches of tests that:
+For a one-time check, you can always upload your doc to an AI agent and ask it questions. But if you want to build a list of tests and run them anytime you want against any text, this tool enables you to:
 
 - Writing: Make sure your story's main points are addressed while editing your story.
 - Editing: Build and grow a repository with standard tests you want to run on manuscripts, and make specific tests for specific genres, etc.
