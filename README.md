@@ -11,6 +11,8 @@
 
 CLI tool that lets you define a list of natural language tests (e.g. "The hero wins in the end") against a markdown text and determines whether each one passes or fails.
 
+Supports OpenAI, Anthropic, and local [Ollama](https://ollama.com/) models.
+
 ## Use cases
 
 Sure, for one-time checks you can always upload your doc to an AI agent and ask questions. But for recurring tests that you want to automate, this tool lets you create batches of tests that:
@@ -26,7 +28,25 @@ Sure, for one-time checks you can always upload your doc to an AI agent and ask 
 > It just checks the things you ask it to check.
 > Fuck AI, and fuck hacks that use AI to make reading and writing less fun.
 
-Supports OpenAI, Anthropic, and local [Ollama](https://ollama.com/) models.
+## The problem (a.k.a. how this started)
+
+Always good to start with the problem we want to solve.
+
+As a writer, I have along my stories:
+
+- Notes
+- To do lists
+- Checklists
+- Character sheets/descriptions
+- Plot summaries
+- Notes for myself before I send manuscripts to an editor, that I have to re-check with every new draft
+- Notes and snippets from books on writing with advice I’d love to think that I'm sticking to, but it’s impossible to keep track of every single nugget of advice.
+
+### The solution
+
+As a software engineer, I've used testing before.
+And I noticed that all of these can be expressed as natural language tests (in plain English, or Spanish, or any language).
+And now, with AI, natural language tests can be automated.
 
 ## Usage
 
