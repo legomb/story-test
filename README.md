@@ -13,6 +13,12 @@ CLI tool that uses AI/LLMs to evaluate plain-English tests (e.g. "The hero wins 
 
 Supports OpenAI, Anthropic, and local [Ollama](https://ollama.com/) models.
 
+> [!warning] WARNING (first and foremost)
+> This app does not replace writers or editors.
+> This app does not write or edit for you.
+> It just checks the things you ask it to check.
+> Fuck AI, and fuck hacks that use AI to make reading and writing less fun.
+
 ## Use cases
 
 Sure, for one-time checks you can always upload your doc to an AI agent and ask questions. But for recurring tests that you want to automate, this tool lets you create batches of tests that:
@@ -21,12 +27,6 @@ Sure, for one-time checks you can always upload your doc to an AI agent and ask 
 - Editing: Build and grow a repository with standard tests you want to run on manuscripts, and make specific tests for specific genres, etc.
 - Whitepapers / notes: Run tests against your notes or papers. Does my paper convey X point clearly even after my latest changes?
 - Contracts: Run tests against your contracts. Is X case covered?
-
-> [!warning] WARNING (first and foremost)
-> This app does not replace writers or editors.
-> This app does not write or edit for you.
-> It just checks the things you ask it to check.
-> Fuck AI, and fuck hacks that use AI to make reading and writing less fun.
 
 ## The problem (a.k.a. how this started)
 
