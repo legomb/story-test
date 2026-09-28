@@ -9,7 +9,9 @@
 
 </div>
 
-CLI tool that uses AI/LLMs to evaluate plain-English tests (e.g. "The hero wins in the end") against Markdown stories or text, and determines whether each one passes or fails.
+This CLI uses AI and large language models (LLMs) to evaluate plain-English
+tests (e.g., "The hero wins in the end") against Markdown stories or other text.
+It reports whether each test passes or fails.
 
 Supports OpenAI, Anthropic, and local [Ollama](https://ollama.com/) models.
 
@@ -28,17 +30,17 @@ For a one-time check, you can always upload your doc to an AI agent and ask it q
 
 - Writing: Make sure your story's main points are addressed while editing your story.
 - Editing: Build and grow a repository with standard tests you want to run on manuscripts, and make specific tests for specific genres, etc.
-- Whitepapers / notes: Run tests against your notes or papers. Does my paper convey X point clearly even after my latest changes?
+- White papers / notes: Run tests against your notes or papers. Does my paper convey X point clearly after my latest changes?
 - Contracts: Run tests against your contracts. Is X case covered?
 
 ## The problem (a.k.a. how this started)
 
 Always good to start with the problem we want to solve.
 
-As a writer, I have along my stories:
+As a writer, I keep:
 
 - Notes
-- To do lists
+- To-do lists
 - Checklists
 - Character sheets/descriptions
 - Plot summaries
@@ -49,7 +51,7 @@ But I'm also a software engineer 💅, and testing is part of my job.
 
 And I noticed that all of these can be expressed as natural language tests (in plain English, or Spanish, or any language).
 
-And now, with AI and LLM, natural language tests can be automated.
+And now, with AI and LLMs, natural-language tests can be automated.
 
 ## Usage
 
@@ -57,10 +59,10 @@ Create a test file containing assertions about a story:
 
 ```yaml
 tests:
-	- name: author
-	  assertion: The story was written by Edgar Allan Poe.
-	- name: ending
-	  assertion: The narrator confesses at the end of the story.
+  - name: author
+    assertion: The story was written by Edgar Allan Poe.
+  - name: ending
+    assertion: The narrator confesses at the end of the story.
 ```
 
 Run the tests against one or more Markdown files:
@@ -89,7 +91,7 @@ For Anthropic:
 ```bash
 export ANTHROPIC_API_KEY=your-key
 story-test story.tests.yml story.md \
-	--provider anthropic --model claude-opus-5-5
+  --provider anthropic --model claude-opus-5-5
 ```
 
 If you are using a Claude Code authorization token, Anthropic's SDK also accepts:
@@ -147,12 +149,12 @@ plain-English assertions. For example:
 
 ```yaml
 tests:
-	- name: protagonist-goal
-		assertion: The protagonist's goal is clear by the end of the first chapter.
-	- name: planted-clue
-		assertion: The brass key is introduced before it is used to open the cellar.
-	- name: ending-resolves-conflict
-		assertion: The ending resolves the central conflict between the sisters.
+  - name: protagonist-goal
+    assertion: The protagonist's goal is clear by the end of the first chapter.
+  - name: planted-clue
+    assertion: The brass key is introduced before it is used to open the cellar.
+  - name: ending-resolves-conflict
+    assertion: The ending resolves the central conflict between the sisters.
 ```
 
 Then run the tests against your draft:
