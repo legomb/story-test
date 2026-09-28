@@ -74,7 +74,33 @@ story-test story.tests.yml story.md --provider ollama --model qwen3:8b
 
 ## 🚀 Getting Started
 
-This repo uses **direnv**, **Devbox**, **Taskfile**, and **pre-commit** for a reproducible dev environment and automatic schema/YAML validation.
+Install the CLI from PyPI with `pipx` so it is available from any directory in
+an isolated Python environment:
+
+```bash
+pipx install story-test
+```
+
+Alternatively, install it into the active Python environment:
+
+```bash
+python -m pip install --upgrade story-test
+```
+
+The default provider is Ollama. Install Ollama separately and pull the default
+model if you use it:
+
+```bash
+ollama pull qwen3:8b
+```
+
+For OpenAI or Anthropic, no local model runtime is needed; provide
+`OPENAI_API_KEY` or `ANTHROPIC_API_KEY` and select the provider as shown above.
+
+## Development Setup
+
+The repository uses **direnv**, **Devbox**, **Taskfile**, and **pre-commit** for
+a reproducible development environment and automatic schema/YAML validation.
 
 ### Setup
 
