@@ -1,6 +1,6 @@
 # Story test
 
-**Run plain-English tests against your stories or texts.**
+<!-- **Run plain-English tests against your stories or texts.** -->
 
 <div align="center">
 
@@ -9,7 +9,7 @@
 
 </div>
 
-CLI tool that uses AI/LLMs to evaluate plain-English tests (e.g. "The hero wins in the end") against Markdown text and determine whether each one passes or fails.
+CLI tool that uses AI/LLMs to evaluate plain-English tests (e.g. "The hero wins in the end") against Markdown stories or text, and determines whether each one passes or fails.
 
 Supports OpenAI, Anthropic, and local [Ollama](https://ollama.com/) models.
 
