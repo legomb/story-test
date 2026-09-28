@@ -127,6 +127,30 @@ ollama pull qwen3:8b
 For OpenAI or Anthropic, no local model runtime is needed; provide
 `OPENAI_API_KEY` or `ANTHROPIC_API_KEY` and select the provider as shown above.
 
+## Test-driven writing
+
+You could even use this for test-driven writing, which I'm hereby inventing I believe.
+Pantsers: skip this section.
+
+Some of you are plotters.
+
+Some of you are technical writers that have requirements before you have a document.
+
+Just for you, this app basically enables you to use [Test-Driven Development (TDD)](https://en.wikipedia.org/wiki/Test-driven_development) for writing.
+
+### So what is test-driven writing?
+
+summary of TDD #todo
+
+### How to apply it to writing
+
+1. Start with the tests. Write your notes, story outline, etc. and create a blank story file. Run your tests. They will all fail. This is your starting point. Now your goal is to make those tests succeed.
+2. After each writing session, run the tests again to track your progress.
+
+### CI, automatic checks every time you make changes
+
+If you want to nerd it out, etc.
+
 ## Development Setup
 
 The repository uses **direnv**, **Devbox**, **Taskfile**, and **pre-commit** for
