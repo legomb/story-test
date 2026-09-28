@@ -11,18 +11,20 @@
 
 CLI tool that lets you define a list of natural language tests (e.g. "The hero wins in the end") against a markdown text and determines whether each one passes or fails.
 
-It does not replace a human editor, but it's a great tool to aid in the editing phase, for both writers and editors:
+## Use cases
 
-- Make sure your story's main points are addressed while editing your story.
-- Build and grow a repository with standard tests you want to run on manuscripts, and make specific tests for specific genres, etc.
-
-Supports OpenAI, Anthropic, and local [Ollama](https://ollama.com/) models.
+- Writing: Make sure your story's main points are addressed while editing your story.
+- Editing: Build and grow a repository with standard tests you want to run on manuscripts, and make specific tests for specific genres, etc.
+- Whitepaper / Notes: Run tests against your notes or papers. Does your paper convey a clear point?
+- Contracts: Sure, for ad hoc checks you can always ask an AI agent. But for recurring tests you want to automate, this tool lets you create a batch of tests and run them against any contract.
 
 > [!warning] WARNING (first and foremost)
 > This app does not replace writers or editors.
 > This app does not write or edit for you.
 > It just checks the things you ask it to check.
 > Fuck AI, and fuck hacks that use AI to make reading and writing less fun.
+
+Supports OpenAI, Anthropic, and local [Ollama](https://ollama.com/) models.
 
 ## Usage
 
