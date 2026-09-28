@@ -42,11 +42,11 @@ As a writer, I have along my stories:
 - Notes for myself before I send manuscripts to an editor, that I have to re-check with every new draft
 - Notes and snippets from books on writing with advice I’d love to think that I'm sticking to, but it’s impossible to keep track of every single nugget of advice.
 
-### The solution
+But I'm also a software engineer 💅, and testing is part of my job.
 
-As a software engineer, I've used testing before.
 And I noticed that all of these can be expressed as natural language tests (in plain English, or Spanish, or any language).
-And now, with AI, natural language tests can be automated.
+
+And now, with AI and LLM, natural language tests can be automated.
 
 ## Usage
 
