@@ -20,7 +20,7 @@ Supports OpenAI, Anthropic, and local [Ollama](https://ollama.com/) models.
 >
 > It just checks the things you ask it to check.
 >
-> Fuck AI, and fuck hacks that use AI to make reading and writing less fun.
+> This is not for hacks that use AI to make reading and writing less fun. Go home and get yourself an honest hobby.
 
 ## Use cases
 
