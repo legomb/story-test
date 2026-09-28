@@ -234,14 +234,3 @@ task package:check
 
 This creates the wheel and source archive under `dist/` and validates them with
 Twine. Increment the version in `pyproject.toml` before building a new release.
-
-## Features
-
-- [x] JSON structure validation using `jq`
-- [x] Schema validation using `check-jsonschema` (temporarily disabled)
-- [x] CI/CD integration with GitHub Actions
-- [x] Versioning schemas with directories like `schemas/v1`, `schemas/v2`
-- [x] Documentation with inline schema descriptions
-- [x] Code formatting using `prettier` or `jq`
-- [ ] Documentation with `README` or extended docs folder (pending)
-- [ ] Schema hosting via `$id` URLs or SchemaStore (pending)
