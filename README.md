@@ -136,16 +136,13 @@ story-test story.tests.yml story.md --provider ollama --model qwen3:8b
 
 ### Test-driven writing
 
-You could even use this for test-driven writing, which I'm hereby inventing I believe.
-Pantsers: skip this section.
+For plotters and technical writers who start with requirements before they have a document, this app can be used to apply the basic Test-driven development (TDD) cycle to writing: define what you want the text to do, draft, run the checks, and revise based on the results.
 
-Some of you are plotters. Some of you are technical writers who start with
-requirements before you have a document. Just for you, this app lets you apply
-the basic TDD cycle to writing: define what you want the text to do, draft, run
-the checks, and revise based on what they reveal.
+> [!NOTE]
+> **Test-driven development (TDD)** is an iterative practice where you write the tests before you write the actual code. You start by writing a test, you then make the implementation pass it, and then repeat. [Read more on
+> Wikipedia](https://en.wikipedia.org/wiki/Test-driven_development).
 
-Start by turning your outline, character notes, or revision checklist into
-plain-English assertions. For example:
+Start by turning your outline, character notes, or revision checklist into plain-English assertions. For example:
 
 ```yaml
 tests:
@@ -163,10 +160,7 @@ Then run the tests against your draft:
 story-test story.tests.yml story.md
 ```
 
-An assertion failing does not mean the story is bad. It means either the draft
-has not met that intention yet, or the assertion needs to be clarified. And a
-passing assertion is not a grade for literary quality: these checks are prompts
-for your judgment, not a substitute for it.
+An assertion failing just means that the draft has not met that intention yet, or the assertion needs to be clarified.
 
 How to apply it to writing:
 
@@ -176,10 +170,7 @@ How to apply it to writing:
 
 ### CI for writing
 
-If your manuscript lives in Git, you can run the checks on every push or pull
-request. That gives you a repeatable reminder when a revision changes something
-you were trying to preserve. Keep subjective checks advisory, and reserve strict
-CI failure for assertions you genuinely want to enforce.
+If your manuscript lives in Git, you can run the checks on every push or pull request. That gives you an automatic warning when a revision breaks a test. You can also add strict CI failure when the changes break the manuscript, to ensure that they cannot be merged into the main branch.
 
 ## Maintaining this repo
 
