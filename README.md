@@ -13,10 +13,12 @@ CLI tool that lets you define a list of natural language tests (e.g. "The hero w
 
 ## Use cases
 
+Sure, for ad hoc checks you can always upload your doc to an AI agent and ask questions. But for recurring tests that you want to automate, this tool lets you create batches of tests that:
+
 - Writing: Make sure your story's main points are addressed while editing your story.
 - Editing: Build and grow a repository with standard tests you want to run on manuscripts, and make specific tests for specific genres, etc.
-- Whitepaper / Notes: Run tests against your notes or papers. Does your paper convey a clear point?
-- Contracts: Sure, for ad hoc checks you can always ask an AI agent. But for recurring tests you want to automate, this tool lets you create a batch of tests and run them against any contract.
+- Whitepapers / notes: Run tests against your notes or papers. Does my paper convey X point clearly?
+- Contracts: Run tests against your contracts. Is X case covered?
 
 > [!warning] WARNING (first and foremost)
 > This app does not replace writers or editors.
