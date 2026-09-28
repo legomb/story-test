@@ -1,6 +1,6 @@
 # Story test
 
-**Test-driven writing for everyone.**
+**Test your stories with plain-English tests.**
 
 <div align="center">
 
