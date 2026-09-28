@@ -53,6 +53,31 @@ And I noticed that all of these can be expressed as natural language tests (in p
 
 And now, with AI and LLMs, natural-language tests can be automated.
 
+## 🚀 Getting Started
+
+Install the CLI from PyPI with `pipx` so it is available from any directory in
+an isolated Python environment:
+
+```bash
+pipx install story-test
+```
+
+Alternatively, install it into the active Python environment:
+
+```bash
+python -m pip install --upgrade story-test
+```
+
+The default provider is Ollama. Install Ollama separately and pull the default
+model if you use it:
+
+```bash
+ollama pull qwen3:8b
+```
+
+For OpenAI or Anthropic, no local model runtime is needed; provide
+`OPENAI_API_KEY` or `ANTHROPIC_API_KEY` and select the provider as shown above.
+
 ## Usage
 
 Create a test file containing assertions about a story:
@@ -106,31 +131,6 @@ Ollama remains available as an optional local provider:
 STORY_TEST_PROVIDER=ollama sh install.sh
 story-test story.tests.yml story.md --provider ollama --model qwen3:8b
 ```
-
-## 🚀 Getting Started
-
-Install the CLI from PyPI with `pipx` so it is available from any directory in
-an isolated Python environment:
-
-```bash
-pipx install story-test
-```
-
-Alternatively, install it into the active Python environment:
-
-```bash
-python -m pip install --upgrade story-test
-```
-
-The default provider is Ollama. Install Ollama separately and pull the default
-model if you use it:
-
-```bash
-ollama pull qwen3:8b
-```
-
-For OpenAI or Anthropic, no local model runtime is needed; provide
-`OPENAI_API_KEY` or `ANTHROPIC_API_KEY` and select the provider as shown above.
 
 ## Advanced uses
 
