@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "story-test"
-version = "2.4.0"
+version = "3.0.0"
 description = "Evaluate story assertions with hosted or local AI models."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -26,7 +26,7 @@ dependencies = [
 ]
 
 [project.scripts]
-story-test = "story_test:main"
+story-test = "story_test.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/legomb/story-test"
@@ -34,10 +34,13 @@ Issues = "https://github.com/legomb/story-test/issues"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
-packages = ["story_test"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.setuptools.data-files]
 "share/story-test/schemas/v1" = ["schemas/v1/tests.schema.json"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
+testpaths = ["test"]

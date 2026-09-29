@@ -54,7 +54,7 @@ tasks:
   test:unit:
     desc: Run Python unit tests
     cmds:
-      - python -m pytest test/test_story_test.py
+      - python -m pytest
 
   test:example-story:
     desc: Run the Tell-Tale Heart assertions with Ollama
