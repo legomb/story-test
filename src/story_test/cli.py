@@ -23,7 +23,7 @@ INSTALLED_SCHEMA_PATH = (
 DEFAULT_PROVIDER = "ollama"
 DEFAULT_MODELS = {
     "openai": "gpt-4.1-mini",
-    "anthropic": "claude-3-5-haiku-latest",
+    "anthropic": "claude-opus-5-5",
     "ollama": "qwen3:8b",
 }
 DEFAULT_OLLAMA_HOST = "http://127.0.0.1:11434"
