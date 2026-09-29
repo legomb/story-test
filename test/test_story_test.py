@@ -1,8 +1,10 @@
 from pathlib import Path
 from unittest.mock import Mock
 
+import pytest
+
 from story_test import OllamaRunner, exit_code, run_tests
-from story_test.cli import _anthropic_json, _colorize_status
+from story_test.cli import AnthropicRunner, _anthropic_json, _colorize_status
 
 ROOT = Path(__file__).resolve().parent.parent
 TESTS = ROOT / "test/the-tell-tale-heart.tests.yml"
@@ -81,3 +83,20 @@ def test_colorizes_test_statuses() -> None:
     assert _colorize_status("PASS", True) == "\033[32mPASS\033[0m"
     assert _colorize_status("FAIL", True) == "\033[31mFAIL\033[0m"
     assert _colorize_status("PASS", False) == "PASS"
+
+
+def test_anthropic_runner_reports_truncated_response() -> None:
+    class Response:
+        stop_reason = "max_tokens"
+        content = []
+
+    runner = AnthropicRunner.__new__(AnthropicRunner)
+    runner.model = "claude-opus-5-5"
+    runner.client = Mock()
+    runner.client.messages.create.return_value = Response()
+
+    with pytest.raises(RuntimeError, match="'max_tokens' before answering 'author'"):
+        runner.predict("Story text", {"author": {"type": "boolean"}})
+
+    kwargs = runner.client.messages.create.call_args.kwargs
+    assert kwargs["output_config"]["format"]["type"] == "json_schema"

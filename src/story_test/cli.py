@@ -32,6 +32,15 @@ SYSTEM_PROMPT = (
     "Evaluate the assertion against the story. Return only JSON in the form "
     '{"supported": true} or {"supported": false}.'
 )
+ANTHROPIC_OUTPUT_FORMAT = {
+    "type": "json_schema",
+    "schema": {
+        "type": "object",
+        "properties": {"supported": {"type": "boolean"}},
+        "required": ["supported"],
+        "additionalProperties": False,
+    },
+}
 
 
 def _anthropic_json(content: list[Any]) -> dict[str, Any]:
@@ -96,12 +105,20 @@ class AnthropicRunner:
     ) -> dict[str, Any]:
         answers = {}
         for question_id in questions:
+            # Thinking tokens count toward max_tokens, and newer models always
+            # think before answering, so leave room beyond the tiny JSON answer.
             response = self.client.messages.create(
                 model=self.model,
-                max_tokens=64,
+                max_tokens=16000,
                 system=SYSTEM_PROMPT,
                 messages=[{"role": "user", "content": state}],
+                output_config={"format": ANTHROPIC_OUTPUT_FORMAT},
             )
+            if response.stop_reason in ("max_tokens", "refusal"):
+                raise RuntimeError(
+                    f"Anthropic stopped with {response.stop_reason!r} "
+                    f"before answering {question_id!r}"
+                )
             answers[question_id] = {
                 "supported": _anthropic_json(response.content)["supported"]
             }
