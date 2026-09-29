@@ -183,6 +183,34 @@ devbox shell
 task pre-commit:install
 ```
 
+### Project layout
+
+```text
+src/story_test/
+  cli.py          Command-line arguments and terminal output
+  runner.py       run_tests(): checks each test with an evaluator, streaming results
+  loading.py      Reads and validates tests files and stories
+  prompts.py      Prompt and JSON answer format shared by the providers
+  models.py       StoryTest and StoryTestResult data types
+  errors.py       Errors reported to the user without a traceback
+  providers/      One module per AI provider, plus the registry in __init__.py
+```
+
+The CLI is a thin layer over the package API, so other front ends (such as an
+HTTP server) can reuse it:
+
+```python
+from story_test import create_evaluator, parse_tests, run_tests
+
+evaluator = create_evaluator("anthropic", "claude-opus-5-5")
+for result in run_tests(parse_tests(document), story, evaluator):
+    print(result.name, result.passed)
+```
+
+To add a provider, create a module in `providers/` with a class that has an
+`evaluate(assertion, story) -> bool` method, then register it in
+`providers/__init__.py`.
+
 ### Tasks
 
 Run `task` to see a list of available tasks.
